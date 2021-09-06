@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_peekHeight="40sp"
+    android:background="#000a12"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutHearder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bottom_sheet_cornor"
+        app:cardBackgroundColor="@color/primaryDark" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="7sp">
+
+                <FrameLayout
+                    android:id="@+id/fNoteBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp" >
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_blue" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteBlue"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteCyan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_cyan" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteCyan"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteGreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_green" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteGreen"
+                        android:layout_width="17dp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteOrange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_orange" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteOrange"
+                        android:layout_width="16dp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNotePurple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_purple" />
+
+                    <ImageView
+                        android:id="@+id/imgNotePurple"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteRed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_red" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteRed"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteYellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_yellow" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteYellow"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteBrown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_brown" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteBrown"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fNoteIndigo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3sp">
+
+                    <View
+                        android:layout_width="33sp"
+                        android:layout_height="33sp"
+                        android:background="@drawable/notes_color_indigo" />
+
+                    <ImageView
+                        android:id="@+id/imgNoteIndigo"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        app:tint="@color/black"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:padding="10sp"
+                    android:src="@drawable/donecheck" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Done"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:fontFamily="@font/exo2variablefont"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:padding="10sp"
+                    android:src="@drawable/ic_picture"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Image"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:fontFamily="@font/exo2variablefont"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:padding="10sp"
+                    android:src="@drawable/ic_link"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Done"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:fontFamily="@font/exo2variablefont"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

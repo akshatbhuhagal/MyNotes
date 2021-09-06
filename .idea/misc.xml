@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/bottom_sheet_cornor.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/bottom_sheet_view.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/datatime_cornor.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/ic_more.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/activity_main.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/fragment_create_note.xml" value="0.29393115942028986" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/fragment_notes_bottom_sheet.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/item_rv_notes.xml" value="0.29393115942028986" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

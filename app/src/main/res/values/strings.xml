@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MyNotes</string>
+    <string name="tasks">Tasks</string>
+    <string name="snackbarok">OK</string>
+    <string name="storage_permission_text">This App Needs access to your Storage.</string>
+</resources>
