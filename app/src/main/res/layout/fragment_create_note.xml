@@ -79,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_marginRight="20sp"
+                android:maxLines="1"
                 android:background="@null"
                 android:fontFamily="@font/manropebold"
                 android:hint="Notes Title"
@@ -102,6 +103,88 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <LinearLayout
+            android:id="@+id/layoutWebUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@color/lightGreyDark"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etWebLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="5sp"
+                android:background="@null"
+                android:fontFamily="@font/exo2variablefont"
+                android:hint="Enter Web Url"
+                android:paddingLeft="13sp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundcorner"
+                    android:fontFamily="@font/manropebold"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginBottom="5sp"
+                    android:text="Cancel" />
+
+                <Button
+                    android:id="@+id/btnOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundcorner"
+                    android:fontFamily="@font/manropebold"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginBottom="5sp"
+                    android:text="Ok" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvWebLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:autoLink="web"
+            android:text="www.google.com"
+            android:layout_marginLeft="12sp"
+            android:layout_marginRight="12sp"
+            android:visibility="gone"
+            android:gravity="start" />
 
         <EditText
             android:id="@+id/etNoteDesc"

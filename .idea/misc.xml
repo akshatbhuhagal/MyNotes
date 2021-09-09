@@ -7,10 +7,15 @@
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/bottom_sheet_view.xml" value="0.3828125" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/datatime_cornor.xml" value="0.3828125" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/ic_more.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/roundcorner.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/rounded_corner_et.xml" value="0.3828125" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/searchview_background.xml" value="0.3828125" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/activity_main.xml" value="0.29257246376811596" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/fragment_create_note.xml" value="0.29393115942028986" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/fragment_home.xml" value="0.28396739130434784" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/fragment_notes_bottom_sheet.xml" value="0.29257246376811596" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/layout/item_rv_notes.xml" value="0.29393115942028986" />
+        <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Akshat/AndroidStudioProjects/MyNotes/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
       </map>
     </option>

@@ -42,6 +42,23 @@
                 android:fontFamily="@font/manropebold" />
 
             <TextView
+                android:id="@+id/tvWebLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:paddingLeft="10sp"
+                android:paddingBottom="7sp"
+                android:paddingTop="7sp"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:autoLink="web"
+                android:text="www.google.com"
+                android:visibility="gone"
+                android:gravity="start" />
+
+            <TextView
                 android:id="@+id/tvDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
