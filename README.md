@@ -15,8 +15,5 @@ Many things to add (Not Final Version)
 ### To-DO
 
   - Delete Notes
-  - Add URL
-  - Update Notes
   - Search Notes
-  - View Notes
   - UI Changes
