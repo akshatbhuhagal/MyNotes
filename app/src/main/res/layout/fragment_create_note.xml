@@ -9,205 +9,232 @@
     android:orientation="vertical"
     tools:context=".CreateNoteFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="120sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDateTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:tint="@color/white" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+    <TextView
+        android:id="@+id/tvDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="5sp"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgDone"
+        app:layout_constraintStart_toEndOf="@+id/imgBack"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvDateTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5sp"
-            android:text="Date"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toStartOf="@+id/imgDone"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:src="@drawable/donecheck"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDateTime">
-
-            <View
-                android:id="@+id/colorView"
-                android:layout_width="5sp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10sp"
-                android:layout_marginLeft="10sp" />
-
-            <EditText
-                android:id="@+id/etNoteTitle"
-                android:layout_width="match_parent"
-                android:layout_height="40sp"
-                android:layout_marginRight="20sp"
-                android:maxLines="1"
-                android:background="@null"
-                android:fontFamily="@font/manropebold"
-                android:hint="Notes Title"
-                android:paddingStart="5sp"
-                android:paddingLeft="5sp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imgDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:src="@drawable/donecheck"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDateTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/tvDateTime">
 
-        <LinearLayout
-            android:id="@+id/layoutWebUrl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:background="@color/lightGreyDark"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/etWebLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:layout_marginRight="10sp"
-                android:layout_marginTop="5sp"
-                android:background="@null"
-                android:fontFamily="@font/exo2variablefont"
-                android:hint="Enter Web Url"
-                android:paddingLeft="13sp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:orientation="horizontal">
-
-
-                <Button
-                    android:id="@+id/btnCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundcorner"
-                    android:fontFamily="@font/manropebold"
-                    android:textAllCaps="false"
-                    android:layout_marginTop="5sp"
-                    android:layout_marginEnd="10sp"
-                    android:layout_marginRight="10sp"
-                    android:layout_marginStart="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginBottom="5sp"
-                    android:text="Cancel" />
-
-                <Button
-                    android:id="@+id/btnOk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundcorner"
-                    android:fontFamily="@font/manropebold"
-                    android:textAllCaps="false"
-                    android:layout_marginTop="5sp"
-                    android:layout_marginRight="10sp"
-                    android:layout_marginEnd="10sp"
-                    android:layout_marginStart="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginBottom="5sp"
-                    android:text="Ok" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvWebLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:textAlignment="textStart"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:autoLink="web"
-            android:text="www.google.com"
-            android:layout_marginLeft="12sp"
-            android:layout_marginRight="12sp"
-            android:visibility="gone"
-            android:gravity="start" />
+        <View
+            android:id="@+id/colorView"
+            android:layout_width="5sp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10sp"
+            android:layout_marginLeft="10sp" />
 
         <EditText
-            android:id="@+id/etNoteDesc"
+            android:id="@+id/etNoteTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="5sp"
+            android:layout_height="40sp"
+            android:layout_marginRight="20sp"
             android:background="@null"
-            android:fontFamily="@font/exo2variablefont"
-            android:hint="Enter Notes Here"
-            android:paddingLeft="13sp"
+            android:fontFamily="@font/manropebold"
+            android:hint="Notes Title"
+            android:maxLines="1"
+            android:paddingStart="5sp"
+            android:paddingLeft="5sp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"
+            android:textStyle="bold" />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWebLink">
 
         <ImageView
             android:id="@+id/imgNote"
             android:layout_width="match_parent"
             android:layout_height="300sp"
             android:layout_marginTop="15sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="10sp"
+            android:src="@drawable/ic_delete"
+            android:visibility="visible"
+            app:tint="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutWebUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightGreyDark"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etWebLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:fontFamily="@font/exo2variablefont"
+                android:hint="https://"
+                android:paddingLeft="13sp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <ImageView
+                android:id="@+id/imgUrlDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:src="@drawable/ic_cancel"
+                android:visibility="gone"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/roundcorner"
+                android:fontFamily="@font/manropebold"
+                android:text="Cancel"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/roundcorner"
+                android:fontFamily="@font/manropebold"
+                android:text="Ok"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvWebLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoLink="web"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:padding="5sp"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNoteDesc" />
+
+    <EditText
+        android:id="@+id/etNoteDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fontFamily="@font/exo2variablefont"
+        android:hint="Enter Notes Here"
+        android:paddingLeft="13sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutWebUrl" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -225,7 +252,6 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_more"
             app:tint="@color/white" />
-
 
     </FrameLayout>
 

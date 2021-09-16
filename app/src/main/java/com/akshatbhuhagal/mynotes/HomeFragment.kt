@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.adapter.NotesAdapter
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
+import com.akshatbhuhagal.mynotes.entities.Notes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -20,6 +21,8 @@ class HomeFragment : BaseFragment() {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    var notesAdapter : NotesAdapter = NotesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +60,13 @@ class HomeFragment : BaseFragment() {
             context?.let {
 
                 var notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()
-                binding.recyclerView.adapter = NotesAdapter(notes)
+                notesAdapter!!.setData(notes)
+                binding.recyclerView.adapter = notesAdapter
 
             }
         }
 
-
+        notesAdapter!!.setOnClickListener(onClicked)
 
 
         // Find View By ID
@@ -79,6 +83,22 @@ class HomeFragment : BaseFragment() {
         }
 
     }
+
+
+    private val onClicked = object : NotesAdapter.onItemClickListener {
+        override fun onClicked(notesId : Int) {
+
+            var fragment : Fragment
+            var bundle = Bundle()
+            bundle.putInt("noteId", notesId)
+            fragment = CreateNoteFragment.newInstance()
+            fragment.arguments = bundle
+
+            replaceFragment(fragment,true)
+        }
+
+    }
+
 
     fun replaceFragment(fragment: Fragment, istransition: Boolean) {
 

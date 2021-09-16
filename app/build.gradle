@@ -47,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
     // Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
 

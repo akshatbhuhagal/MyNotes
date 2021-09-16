@@ -9,6 +9,7 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/_5sdp"
         app:cardCornerRadius="15sp"
         android:layout_margin="10sp"
         app:cardBackgroundColor="#3e434e" >
@@ -26,8 +27,8 @@
                 android:scaleType="fitCenter"
                 android:visibility="gone"
                 android:adjustViewBounds="true"
-                app:riv_corner_radius_bottom_left="30sp"
-                app:riv_corner_radius_bottom_right="30sp" />
+                app:riv_corner_radius_bottom_left="@dimen/_20sdp"
+                app:riv_corner_radius_bottom_right="@dimen/_20sdp" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -37,26 +38,22 @@
                 android:textColor="@color/white"
                 android:text="My Notes"
                 android:textStyle="bold"
-                android:paddingTop="10sp"
-                android:paddingLeft="10sp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
                 android:fontFamily="@font/manropebold" />
 
             <TextView
                 android:id="@+id/tvWebLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
-                android:paddingLeft="10sp"
-                android:paddingBottom="7sp"
-                android:paddingTop="7sp"
                 android:textColor="@color/white"
                 android:textSize="13sp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:autoLink="web"
-                android:text="www.google.com"
-                android:visibility="gone"
-                android:gravity="start" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvDesc"
@@ -66,10 +63,10 @@
                 android:textColor="@color/white"
                 android:text="My Notes"
                 android:maxLength="70"
-                android:paddingTop="10sp"
-                android:paddingLeft="10sp"
-                android:paddingRight="10sp"
-                android:paddingBottom="10sp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:fontFamily="@font/manropebold" />
 
             <TextView
@@ -84,7 +81,6 @@
                 android:paddingLeft="5sp"
                 android:paddingRight="5sp"
                 android:paddingBottom="5sp"
-                android:layout_marginBottom="5sp"
                 android:fontFamily="@font/manropebold" />
 
 
