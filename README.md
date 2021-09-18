@@ -14,6 +14,4 @@ Many things to add (Not Final Version)
 
 ### To-DO
 
-  - Delete Notes
-  - Search Notes
   - UI Changes
