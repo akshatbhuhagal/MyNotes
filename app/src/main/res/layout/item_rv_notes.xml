@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/_5sdp"
-        app:cardCornerRadius="15sp"
         android:layout_margin="10sp"
-        app:cardBackgroundColor="#3e434e" >
+        android:elevation="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/lightGreyDark"
+        app:cardCornerRadius="15sp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imgNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                android:adjustViewBounds="true"
                 app:riv_corner_radius_bottom_left="@dimen/_20sdp"
                 app:riv_corner_radius_bottom_right="@dimen/_20sdp" />
 
@@ -34,54 +34,55 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:text="My Notes"
-                android:textStyle="bold"
-                android:paddingTop="@dimen/_10sdp"
+                android:fontFamily="@font/manropebold"
+                android:maxLength="40"
                 android:paddingLeft="@dimen/_10sdp"
-                android:fontFamily="@font/manropebold" />
+                android:paddingTop="@dimen/_10sdp"
+                android:text="My Notes"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvWebLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingLeft="@dimen/_10sdp"
+                android:autoLink="web"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:autoLink="web"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:textSize="13sp"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/white"
-                android:text="My Notes"
+                android:fontFamily="@font/manropebold"
                 android:maxLength="70"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingLeft="@dimen/_10sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:fontFamily="@font/manropebold" />
+                android:text="My Notes"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tvDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
-                android:textColor="@color/white"
-                android:text="My Notes"
                 android:layout_gravity="center"
-                android:paddingTop="5sp"
+                android:fontFamily="@font/manropebold"
                 android:paddingLeft="5sp"
+                android:paddingTop="5sp"
                 android:paddingRight="5sp"
                 android:paddingBottom="5sp"
-                android:fontFamily="@font/manropebold" />
+                android:text="My Notes"
+                android:textColor="@color/white"
+                android:textSize="9sp" />
 
 
         </LinearLayout>

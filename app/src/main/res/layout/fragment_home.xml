@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -59,13 +59,18 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15sp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/searchview_background"
-                app:iconifiedByDefault="false"
                 android:focusable="false"
-                app:queryHint="Search Notes" />
+                android:theme="@style/SearchTheme"
+                app:closeIcon="@drawable/close_note"
+                app:iconifiedByDefault="false"
+                app:searchIcon="@drawable/search_note" />
 
 
         </LinearLayout>
@@ -80,44 +85,20 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCreateNoteBtn"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_note"
+            android:tint="@color/white"
+            app:backgroundTint="#3e434e"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/white" />
 
-            <com.google.android.material.bottomappbar.BottomAppBar
-                android:id="@+id/bottomNavBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:fabCradleMargin="15sp"
-                app:fabCradleVerticalOffset="10sp"
-                app:fabCradleRoundedCornerRadius="20sp"
-                app:fabAlignmentMode="end"
-                android:layout_gravity="bottom" >
-
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottomNavigationView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:menu="@menu/bottom_nav_menu"
-                    android:layout_marginRight="16sp"
-                    android:background="@android:color/transparent" />
-
-            </com.google.android.material.bottomappbar.BottomAppBar>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabCreateNoteBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:layout_anchor="@id/bottomNavBar" />
-
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

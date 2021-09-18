@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="#000000"
     app:behavior_peekHeight="40sp"
-    android:background="#000a12"
     app:layout_behavior="@string/bottom_sheet_behavior"
     tools:context=".MainActivity">
 
@@ -14,9 +14,9 @@
         android:id="@+id/layoutHearder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:background="@drawable/bottom_sheet_cornor"
-        app:cardBackgroundColor="@color/primaryDark" >
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/primaryDark">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:id="@+id/fNoteBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3sp" >
+                    android:layout_margin="3sp">
 
                     <View
                         android:layout_width="33sp"
@@ -45,8 +45,8 @@
                         android:id="@+id/imgNoteBlue"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -65,8 +65,8 @@
                         android:id="@+id/imgNoteCyan"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -85,8 +85,8 @@
                         android:id="@+id/imgNoteGreen"
                         android:layout_width="17dp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -105,8 +105,8 @@
                         android:id="@+id/imgNoteOrange"
                         android:layout_width="16dp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -125,8 +125,8 @@
                         android:id="@+id/imgNotePurple"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -145,8 +145,8 @@
                         android:id="@+id/imgNoteRed"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -165,8 +165,8 @@
                         android:id="@+id/imgNoteYellow"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -185,8 +185,8 @@
                         android:id="@+id/imgNoteBrown"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -205,8 +205,8 @@
                         android:id="@+id/imgNoteIndigo"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        app:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:tint="@color/black" />
 
                 </FrameLayout>
 
@@ -214,28 +214,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutDeleteNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5sp"
                     android:padding="10sp"
-                    android:src="@drawable/donecheck" />
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Done"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/exo2variablefont"
                     android:paddingLeft="10sp"
                     android:paddingRight="10sp"
-                    android:fontFamily="@font/exo2variablefont"
-                    android:layout_gravity="center" />
+                    android:text="Delete Note"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -257,14 +260,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/exo2variablefont"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
                     android:text="Add Image"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:paddingLeft="10sp"
-                    android:paddingRight="10sp"
-                    android:fontFamily="@font/exo2variablefont"
-                    android:layout_gravity="center" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -285,14 +288,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/exo2variablefont"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
                     android:text="Add Web Link"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:paddingLeft="10sp"
-                    android:paddingRight="10sp"
-                    android:fontFamily="@font/exo2variablefont"
-                    android:layout_gravity="center" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.adapter.NotesAdapter
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
@@ -15,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : BaseFragment() {
@@ -22,6 +25,7 @@ class HomeFragment : BaseFragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    var arrNotes = ArrayList<Notes>()
     var notesAdapter : NotesAdapter = NotesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +65,7 @@ class HomeFragment : BaseFragment() {
 
                 var notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()
                 notesAdapter!!.setData(notes)
+                arrNotes = notes as ArrayList<Notes>
                 binding.recyclerView.adapter = notesAdapter
 
             }
@@ -70,17 +75,34 @@ class HomeFragment : BaseFragment() {
 
 
         // Find View By ID
-        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val fabCreateNoteBtn = view.findViewById<FloatingActionButton>(R.id.fabCreateNoteBtn)
-
-        // Bottom Nav Setup
-        bottomNavigationView.background = null
-        bottomNavigationView.menu.getItem(4).isEnabled = false
 
         // FAB CREATE NOTE FRAGMENT
         fabCreateNoteBtn.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(),true)
         }
+
+        search_view.setOnQueryTextListener( object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+
+                var tempArr = ArrayList<Notes>()
+
+                for (arr in arrNotes) {
+                    if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())){
+                        tempArr.add(arr)
+                    }
+                }
+                notesAdapter.setData(tempArr)
+                notesAdapter.notifyDataSetChanged()
+                return true
+            }
+
+        })
 
     }
 
