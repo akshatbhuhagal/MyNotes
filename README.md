@@ -26,3 +26,5 @@ Written in Kotlin
   - LiveData
   - ViewModel
   - ListAdapter for animations on data changes
+
+### To Do : UI Changes
