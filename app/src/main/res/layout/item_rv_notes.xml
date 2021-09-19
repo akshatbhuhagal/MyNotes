@@ -14,7 +14,6 @@
         app:cardBackgroundColor="@color/lightGreyDark"
         app:cardCornerRadius="15sp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manropebold"
-                android:maxLength="70"
+                android:maxLength="80"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
