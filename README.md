@@ -27,4 +27,7 @@ Written in Kotlin
   - ViewModel
   - ListAdapter for animations on data changes
 
-### To Do : UI Changes
+### To Do : 
+
+  - UI Changes
+  - CheckBox Feature
