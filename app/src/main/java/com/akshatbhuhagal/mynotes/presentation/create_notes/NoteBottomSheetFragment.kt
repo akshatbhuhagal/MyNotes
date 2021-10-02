@@ -1,4 +1,4 @@
-package com.akshatbhuhagal.mynotes.util
+package com.akshatbhuhagal.mynotes.presentation.create_notes
 
 import android.app.Dialog
 import android.content.Intent
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
 
 class NoteBottomSheetFragment : BottomSheetDialogFragment() {
 
-    var selectedColor = "#3e434e"
+    private var selectedColor = "#3e434e"
 
     companion object {
 
@@ -28,9 +28,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             noteId = id
             return fragment
         }
-
     }
-
 
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
@@ -70,7 +68,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
                 }
             })
         }
@@ -84,7 +81,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.fragment_notes_bottom_sheet, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -95,7 +91,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         }
         setListener()
     }
-
 
     private fun setListener() {
 
@@ -116,7 +111,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Blue")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteCyan.setOnClickListener {
@@ -136,7 +130,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Cyan")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteGreen.setOnClickListener {
@@ -156,7 +149,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Green")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteOrange.setOnClickListener {
@@ -176,7 +168,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Orange")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNotePurple.setOnClickListener {
@@ -196,7 +187,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Purple")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteRed.setOnClickListener {
@@ -216,7 +206,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Red")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteYellow.setOnClickListener {
@@ -236,7 +225,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Yellow")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteBrown.setOnClickListener {
@@ -256,7 +244,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Brown")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
 
         fNoteIndigo.setOnClickListener {
@@ -276,7 +263,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Indigo")
             intent.putExtra("selectedColor", selectedColor)
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-
         }
         // FINISH COLORS
 
@@ -287,7 +273,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "Image")
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
             dismiss()
-
         }
 
         // ADD URL
@@ -297,7 +282,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "WebUrl")
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
             dismiss()
-
         }
 
         // Delete Notes
@@ -307,10 +291,6 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             intent.putExtra("action", "DeleteNote")
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
             dismiss()
-
         }
-
-
     }
-
 }

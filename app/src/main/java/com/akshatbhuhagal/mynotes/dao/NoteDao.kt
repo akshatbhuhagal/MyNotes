@@ -3,7 +3,6 @@ package com.akshatbhuhagal.mynotes.dao
 import androidx.room.*
 import com.akshatbhuhagal.mynotes.entities.Notes
 
-
 @Dao
 interface NoteDao {
 
@@ -24,6 +23,4 @@ interface NoteDao {
 
     @Update
     suspend fun updateNotes(note: Notes)
-
-
 }

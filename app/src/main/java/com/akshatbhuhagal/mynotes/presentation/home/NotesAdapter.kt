@@ -1,4 +1,4 @@
-package com.akshatbhuhagal.mynotes.adapter
+package com.akshatbhuhagal.mynotes.presentation.home
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -10,11 +10,10 @@ import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.entities.Notes
 import kotlinx.android.synthetic.main.item_rv_notes.view.*
 
+class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
-class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
-
-    var arrList = ArrayList<Notes>()
-    var listener : onItemClickListener? = null
+    private var arrList = ArrayList<Notes>()
+    private var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         return NotesViewHolder(
@@ -27,7 +26,6 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         holder.itemView.tvTitle.text = arrList[position].title
         holder.itemView.tvDesc.text = arrList[position].noteText
         holder.itemView.tvDateTime.text = arrList[position].dateTime
-
 
         if (arrList[position].color != null) {
             holder.itemView.cardView.setCardBackgroundColor(Color.parseColor(arrList[position].color))
@@ -52,29 +50,23 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         holder.itemView.cardView.setOnClickListener {
             listener!!.onClicked(arrList[position].id!!)
         }
-
     }
 
     override fun getItemCount(): Int {
         return arrList.size
     }
 
-
-
     fun setData(arrNotesList: List<Notes>) {
         arrList = arrNotesList as ArrayList<Notes>
     }
 
-    fun setOnClickListener(listener1 : onItemClickListener) {
+    fun setOnClickListener(listener1: OnItemClickListener) {
         listener = listener1
     }
 
-
     inner class NotesViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-
-    interface onItemClickListener {
-        fun onClicked(notesId : Int)
+    interface OnItemClickListener {
+        fun onClicked(notesId: Int)
     }
-
 }

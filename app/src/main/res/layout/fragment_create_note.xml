@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/primaryDark"
     android:orientation="vertical"
-    tools:context=".CreateNoteFragment">
+    tools:context=".presentation.create_notes.CreateNoteFragment">
 
     <ImageView
         android:id="@+id/imgBack"
