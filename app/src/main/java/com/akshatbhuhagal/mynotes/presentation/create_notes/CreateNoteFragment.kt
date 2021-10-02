@@ -11,9 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Patterns
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,6 +23,7 @@ import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
 import com.akshatbhuhagal.mynotes.util.BaseFragment
+import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.coroutines.launch
@@ -38,11 +37,10 @@ class CreateNoteFragment :
     EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
-    private var _binding: FragmentCreateNoteBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentCreateNoteBinding::bind)
 
     var selectedColor = "#3e434e"
-    var currentTime: String? = null
+    private var currentTime: String? = null
 
     // Permission Private Read & Write
     private var READ_STORAGE_PERM = 123
@@ -57,15 +55,6 @@ class CreateNoteFragment :
         super.onCreate(savedInstanceState)
 
         noteId = requireArguments().getInt("noteId", -1)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCreateNoteBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     companion object {
@@ -442,12 +431,6 @@ class CreateNoteFragment :
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(BroadcastReceiver)
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onRequestPermissionsResult(
