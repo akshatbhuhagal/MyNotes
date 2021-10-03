@@ -27,16 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
         android:padding="5sp"
-        android:text="Date"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/imgDone"
         app:layout_constraintStart_toEndOf="@+id/imgBack"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00-00-000" />
 
     <ImageView
         android:id="@+id/imgDone"
