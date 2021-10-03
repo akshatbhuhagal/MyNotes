@@ -80,7 +80,7 @@
             android:paddingStart="5sp"
             android:paddingLeft="5sp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@android:color/darker_gray"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -231,7 +231,7 @@
         android:hint="Enter Notes Here"
         android:paddingLeft="13sp"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
