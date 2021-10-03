@@ -71,7 +71,7 @@
         <EditText
             android:id="@+id/etNoteTitle"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="48dp"
             android:layout_marginRight="20sp"
             android:background="@null"
             android:fontFamily="@font/manropebold"
@@ -229,6 +229,7 @@
         android:background="@null"
         android:fontFamily="@font/exo2variablefont"
         android:hint="Enter Notes Here"
+        android:minHeight="48dp"
         android:paddingLeft="13sp"
         android:textColor="@color/white"
         android:textColorHint="@android:color/darker_gray"
