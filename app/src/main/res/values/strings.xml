@@ -4,4 +4,6 @@
     <string name="snackbarok">OK</string>
     <string name="storage_permission_text">This App Needs access to your Storage.</string>
     <string name="search_notes">Search Notes</string>
+    <string name="btn_back_text">Back</string>
+    <string name="btn_save_text">Save</string>
 </resources>
