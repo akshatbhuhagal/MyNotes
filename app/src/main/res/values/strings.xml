@@ -6,4 +6,6 @@
     <string name="search_notes">Search Notes</string>
     <string name="btn_back_text">Back</string>
     <string name="btn_save_text">Save</string>
+    <string name="btn_more_options_text">More options</string>
+    <string name="hint_note_description_text">Enter Notes Here</string>
 </resources>
