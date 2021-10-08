@@ -12,10 +12,10 @@ abstract class NotesDataBase : RoomDatabase() {
 
     companion object {
 
-        var notesDataBase: NotesDataBase? = null
+        private var notesDataBase: NotesDataBase? = null
 
         @Synchronized
-        fun getDataBase(context: Context): NotesDataBase{
+        fun getDataBase(context: Context): NotesDataBase {
 
             if (notesDataBase == null) {
                 notesDataBase = Room.databaseBuilder(context, NotesDataBase::class.java, "notes.db").build()

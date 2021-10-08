@@ -5,11 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-
 @Entity(tableName = "Notes")
 class Notes : Serializable {
-
-
 
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
@@ -32,9 +29,7 @@ class Notes : Serializable {
     @ColumnInfo(name = "color")
     var color: String? = null
 
-
     override fun toString(): String {
         return "$title : $dateTime"
     }
-
 }

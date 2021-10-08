@@ -8,7 +8,7 @@
     android:background="#000000"
     app:behavior_peekHeight="40sp"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <LinearLayout
         android:id="@+id/layoutHearder"

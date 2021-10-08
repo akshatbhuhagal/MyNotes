@@ -1,9 +1,11 @@
-package com.akshatbhuhagal.mynotes
+package com.akshatbhuhagal.mynotes.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.databinding.ActivityMainBinding
+import com.akshatbhuhagal.mynotes.presentation.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,11 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-
-
-        replaceFragment(HomeFragment.newInstance(),true)
-
-
+        replaceFragment(HomeFragment.newInstance(), true)
     }
 
     fun replaceFragment(fragment: Fragment, istransition: Boolean) {
@@ -36,6 +34,4 @@ class MainActivity : AppCompatActivity() {
         fragmentTransition.replace(R.id.flFragmenet, fragment).addToBackStack(fragment.javaClass.simpleName)
         fragmentTransition.commit()
     }
-
-
 }
