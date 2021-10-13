@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
 import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
-import com.akshatbhuhagal.mynotes.util.BaseFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
@@ -47,7 +46,7 @@ class HomeFragment : BaseFragment() {
         binding.recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
 
                 val notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()

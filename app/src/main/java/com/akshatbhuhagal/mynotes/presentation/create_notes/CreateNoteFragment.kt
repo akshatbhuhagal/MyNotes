@@ -17,23 +17,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
-import com.akshatbhuhagal.mynotes.util.BaseFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_note.*
-import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNoteFragment :
-    BaseFragment(),
+    Fragment(R.layout.fragment_create_note),
     EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
@@ -71,7 +70,7 @@ class CreateNoteFragment :
 
         if (noteId != -1) {
 
-            launch {
+            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 context?.let {
 
                     val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
@@ -187,7 +186,7 @@ class CreateNoteFragment :
 
     private fun updateNote() {
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
                 val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
 
@@ -229,7 +228,7 @@ class CreateNoteFragment :
                     .show()
             }
             else -> {
-                launch {
+                viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                     val notes = Notes()
                     notes.title = etNoteTitle?.text.toString()
                     notes.noteText = etNoteDesc?.text.toString()
@@ -254,7 +253,7 @@ class CreateNoteFragment :
 
     private fun deleteNote() {
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
                 NotesDataBase.getDataBase(it).noteDao().deleteSpecificNote(noteId)
                 requireActivity().supportFragmentManager.popBackStack()
