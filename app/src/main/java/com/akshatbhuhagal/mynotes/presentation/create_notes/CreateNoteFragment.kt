@@ -11,38 +11,35 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Patterns
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
-import com.akshatbhuhagal.mynotes.util.BaseFragment
+import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_note.*
-import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNoteFragment :
-    BaseFragment(),
+    Fragment(R.layout.fragment_create_note),
     EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
-    private var _binding: FragmentCreateNoteBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentCreateNoteBinding::bind)
 
     var selectedColor = "#3e434e"
-    var currentTime: String? = null
+    private var currentTime: String? = null
 
     // Permission Private Read & Write
     private var READ_STORAGE_PERM = 123
@@ -59,15 +56,6 @@ class CreateNoteFragment :
         noteId = requireArguments().getInt("noteId", -1)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCreateNoteBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() =
@@ -82,7 +70,7 @@ class CreateNoteFragment :
 
         if (noteId != -1) {
 
-            launch {
+            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 context?.let {
 
                     val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
@@ -198,7 +186,7 @@ class CreateNoteFragment :
 
     private fun updateNote() {
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
                 val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
 
@@ -240,7 +228,7 @@ class CreateNoteFragment :
                     .show()
             }
             else -> {
-                launch {
+                viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                     val notes = Notes()
                     notes.title = etNoteTitle?.text.toString()
                     notes.noteText = etNoteDesc?.text.toString()
@@ -265,7 +253,7 @@ class CreateNoteFragment :
 
     private fun deleteNote() {
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
                 NotesDataBase.getDataBase(it).noteDao().deleteSpecificNote(noteId)
                 requireActivity().supportFragmentManager.popBackStack()
@@ -442,12 +430,6 @@ class CreateNoteFragment :
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(BroadcastReceiver)
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onRequestPermissionsResult(

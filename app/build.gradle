@@ -67,6 +67,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:r$rootProject.lifecycleVersion"
 
     // Kotlin components
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"

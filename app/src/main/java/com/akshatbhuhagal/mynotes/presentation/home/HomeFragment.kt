@@ -1,28 +1,25 @@
 package com.akshatbhuhagal.mynotes.presentation.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.database.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
 import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
-import com.akshatbhuhagal.mynotes.util.BaseFragment
+import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentHomeBinding::bind)
 
     var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter()
@@ -31,15 +28,6 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     companion object {
@@ -55,9 +43,10 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             context?.let {
 
                 val notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()
@@ -123,12 +112,8 @@ class HomeFragment : BaseFragment() {
                 android.R.anim.slide_in_left
             )
         }
-        fragmentTransition.replace(R.id.flFragmenet, fragment).addToBackStack(fragment.javaClass.simpleName)
+        fragmentTransition.replace(R.id.flFragmenet, fragment)
+            .addToBackStack(fragment.javaClass.simpleName)
         fragmentTransition.commit()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
