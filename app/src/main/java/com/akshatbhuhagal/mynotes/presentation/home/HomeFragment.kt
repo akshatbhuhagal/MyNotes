@@ -12,8 +12,6 @@ import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
 import com.akshatbhuhagal.mynotes.entities.Notes
 import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -58,15 +56,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         notesAdapter.setOnClickListener(onClicked)
 
-        // Find View By ID
-        val fabCreateNoteBtn = view.findViewById<FloatingActionButton>(R.id.fabCreateNoteBtn)
-
         // FAB CREATE NOTE FRAGMENT
-        fabCreateNoteBtn.setOnClickListener {
+        binding.fabCreateNoteBtn.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(), true)
         }
 
-        search_view.setOnQueryTextListener(object :
+        binding.searchView.setOnQueryTextListener(object :
                 SearchView.OnQueryTextListener,
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
