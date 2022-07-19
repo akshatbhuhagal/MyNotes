@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         replaceFragment(HomeFragment.newInstance(), true)
+        
     }
 
     fun replaceFragment(fragment: Fragment, istransition: Boolean) {
@@ -34,4 +35,10 @@ class MainActivity : AppCompatActivity() {
         fragmentTransition.replace(R.id.flFragmenet, fragment).addToBackStack(fragment.javaClass.simpleName)
         fragmentTransition.commit()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 }

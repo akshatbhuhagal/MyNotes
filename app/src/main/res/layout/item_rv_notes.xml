@@ -35,12 +35,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manropebold"
                 android:maxLength="40"
-                android:paddingLeft="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
-                android:text="My Notes"
+                android:text="@string/my_notes"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                />
 
             <TextView
                 android:id="@+id/tvWebLink"
@@ -49,8 +53,10 @@
                 android:autoLink="web"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:paddingStart="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:visibility="gone" />
@@ -61,11 +67,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/manropebold"
                 android:maxLength="80"
-                android:paddingStart="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="My Notes"
+                android:text="@string/my_notes"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 
@@ -79,9 +87,9 @@
                 android:paddingTop="5sp"
                 android:paddingRight="5sp"
                 android:paddingBottom="5sp"
-                android:text="My Notes"
+                android:text="@string/my_notes"
                 android:textColor="@color/white"
-                android:textSize="9sp" />
+                android:textSize="@dimen/_9sdp" />
 
 
         </LinearLayout>
