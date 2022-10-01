@@ -18,39 +18,7 @@ Written in Kotlin
 ### Contributing
 ###### You can star ⭐ and fork 🍽️ this repository on GitHub by navigating at the top of this repository.
 
-## Getting Started
-* Fork it.
-
-* Clone your forked repo and move inside it:
-
-`git clone https://github.com/akshatbhuhagal/MyNotes.git && cd MyNotes`
-
-* Checkout to a new branch to work on an issue:
-
-`git checkout -b my-amazing-feature`
-
-* Running the project
-
-`open the project in Android Studio and run!`
-<br/>
-
-* Once you're all done coding, it's time to open a PR :)
-Run the following commands from the root of the project directory:
-
-`git add .`
-
-`git commit -m "A short description about the feature."`
-
-`git push origin <my-amazing-feature>`
-
-Open your forked repo in your browser and then raise a PR to the `master` branch of this repository!
-
-
-## Contributing
-To start contributing, check out [CONTRIBUTING.md](https://github.com/akshatbhuhagal/MyNotes/blob/master/contributing.md). New contributors are always welcome to support this project. If you want something gentle to start with, check out issues labelled as `easy` or `good-first-issue`. Check out issues labelled as `hacktoberfest` if you are up for some grabs! :) 
-
-
-#### Liked this repo, give it a star ⭐ and fork 🍽️ this repository to help others!!
+#### Like this repo, give it a star ⭐ and fork 🍽️ this repository to help others!!
 
 ***You can Install and test latest MyNotes app from below 👇*** <br> [<img src="https://www.logo.wine/a/logo/Google_Play/Google_Play-Badge-Logo.wine.svg" width="200" />](https://play.google.com/store/apps/details?id=com.akshatbhuhagal.mynotes)
 
