@@ -9,7 +9,7 @@ import java.io.Serializable
 class NoteEntity : Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Int = 0
 
     @ColumnInfo(name = "title")
     var title: String? = null
