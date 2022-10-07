@@ -48,7 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             context?.let {
 
                 val notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()
-                notesAdapter.setData(notes)
+                notesAdapter.submitList(notes)
                 arrNotes = notes as ArrayList<NoteEntity>
                 binding.recyclerView.adapter = notesAdapter
             }
@@ -80,8 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         }
 
                     }
-                    notesAdapter.setData(tempArr)
-                    notesAdapter.notifyDataSetChanged()
+                    notesAdapter.submitList(tempArr)
                     return true
                 }
             })
