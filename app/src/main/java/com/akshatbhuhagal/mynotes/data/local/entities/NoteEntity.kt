@@ -1,4 +1,4 @@
-package com.akshatbhuhagal.mynotes.entities
+package com.akshatbhuhagal.mynotes.data.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "Notes")
-class Notes : Serializable {
+class NoteEntity : Serializable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
@@ -22,7 +22,7 @@ class Notes : Serializable {
 
     @ColumnInfo(name = "img_path")
     var imgPath: String? = null
-
+    
     @ColumnInfo(name = "web_link")
     var webLink: String? = null
 

@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.entities.Notes
+import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import kotlinx.android.synthetic.main.item_rv_notes.view.*
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
-    private var arrList = ArrayList<Notes>()
+    private var arrList = ArrayList<NoteEntity>()
     private var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
@@ -56,8 +56,8 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         return arrList.size
     }
 
-    fun setData(arrNotesList: List<Notes>) {
-        arrList = arrNotesList as ArrayList<Notes>
+    fun setData(arrNoteEntityList: List<NoteEntity>) {
+        arrList = arrNoteEntityList as ArrayList<NoteEntity>
     }
 
     fun setOnClickListener(listener1: OnItemClickListener) {

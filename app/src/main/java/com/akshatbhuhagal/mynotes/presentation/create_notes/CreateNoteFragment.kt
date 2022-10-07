@@ -18,9 +18,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.database.NotesDataBase
+import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
-import com.akshatbhuhagal.mynotes.entities.Notes
+import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -225,16 +225,16 @@ class CreateNoteFragment :
             }
             else -> {
                 viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                    val notes = Notes()
-                    notes.title = etNoteTitle?.text.toString()
-                    notes.noteText = etNoteDesc?.text.toString()
-                    notes.dateTime = currentTime
-                    notes.color = selectedColor
-                    notes.imgPath = selectedImagePath
-                    notes.webLink = webLink
+                    val noteEntity = NoteEntity()
+                    noteEntity.title = etNoteTitle?.text.toString()
+                    noteEntity.noteText = etNoteDesc?.text.toString()
+                    noteEntity.dateTime = currentTime
+                    noteEntity.color = selectedColor
+                    noteEntity.imgPath = selectedImagePath
+                    noteEntity.webLink = webLink
 
                     context?.let {
-                        NotesDataBase.getDataBase(it).noteDao().insertNotes(notes)
+                        NotesDataBase.getDataBase(it).noteDao().insertNotes(noteEntity)
                         etNoteTitle?.setText("")
                         etNoteDesc?.setText("")
                         binding.layoutImage.visibility = View.GONE
