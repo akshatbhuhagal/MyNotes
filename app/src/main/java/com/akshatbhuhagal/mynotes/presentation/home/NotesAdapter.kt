@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_rv_notes.view.*
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     private var arrList = ArrayList<NoteEntity>()
-    private var listener: OnItemClickListener? = null
+    private lateinit var listener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         return NotesViewHolder(
@@ -48,7 +48,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         }
 
         holder.itemView.cardView.setOnClickListener {
-            listener!!.onClicked(arrList[position].id!!)
+            listener.onClicked(arrList[position].id)
         }
     }
 

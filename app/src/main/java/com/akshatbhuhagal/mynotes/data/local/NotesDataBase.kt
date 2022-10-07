@@ -16,11 +16,11 @@ abstract class NotesDataBase : RoomDatabase() {
 
         @Synchronized
         fun getDataBase(context: Context): NotesDataBase {
-
-            if (notesDataBase == null) {
-                notesDataBase = Room.databaseBuilder(context, NotesDataBase::class.java, "notes.db").build()
+            return notesDataBase ?: Room.databaseBuilder(
+                context, NotesDataBase::class.java, "notes.db")
+                .build().also {
+                    notesDataBase = it
             }
-            return notesDataBase!!
         }
     }
 

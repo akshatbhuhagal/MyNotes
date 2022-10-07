@@ -73,9 +73,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     val tempArr = ArrayList<NoteEntity>()
 
                     for (arr in arrNotes) {
-                        if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString())) {
-                            tempArr.add(arr)
+                        arr.title?.let {
+                            if (it.toLowerCase(Locale.getDefault()).contains(p0.toString())) {
+                                tempArr.add(arr)
+                            }
                         }
+
                     }
                     notesAdapter.setData(tempArr)
                     notesAdapter.notifyDataSetChanged()

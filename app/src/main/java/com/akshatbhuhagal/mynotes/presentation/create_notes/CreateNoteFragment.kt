@@ -82,7 +82,7 @@ class CreateNoteFragment :
                     etNoteDesc.setText(notes.noteText)
 
                     if (notes.imgPath != "") {
-                        selectedImagePath = notes.imgPath!!
+                        selectedImagePath = notes.imgPath ?: ""
                         imgNote.setImageBitmap(BitmapFactory.decodeFile(notes.imgPath))
                         layoutImage.visibility = View.VISIBLE
                         imgNote.visibility = View.VISIBLE
@@ -94,7 +94,7 @@ class CreateNoteFragment :
                     }
 
                     if (notes.webLink != "") {
-                        webLink = notes.webLink!!
+                        webLink = notes.webLink ?: ""
                         tvWebLink.text = notes.webLink
                         layoutWebUrl.visibility = View.VISIBLE
                         imgUrlDelete.visibility = View.VISIBLE
@@ -287,53 +287,56 @@ class CreateNoteFragment :
     private val BroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
 
-            val actionColor = p1!!.getStringExtra("action")
+            if (p1 == null)
+                return
+
+            val actionColor = p1.getStringExtra("action")
 
             binding.apply {
-                when (actionColor!!) {
+                when (actionColor) {
 
                     "Blue" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Cyan" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Green" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Orange" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Purple" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Red" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Yellow" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Brown" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Indigo" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
@@ -354,7 +357,7 @@ class CreateNoteFragment :
                         binding.layoutImage.visibility = View.GONE
                         imgNote.visibility = View.GONE
                         binding.layoutWebUrl.visibility = View.GONE
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }
@@ -421,7 +424,7 @@ class CreateNoteFragment :
                         binding.imgNote.visibility = View.VISIBLE
                         binding.layoutImage.visibility = View.VISIBLE
 
-                        selectedImagePath = getPathFromUri(selectedImageUrl)!!
+                        selectedImagePath = getPathFromUri(selectedImageUrl) ?: ""
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                     }
