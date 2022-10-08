@@ -18,9 +18,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.database.NotesDataBase
+import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
-import com.akshatbhuhagal.mynotes.entities.Notes
+import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -82,7 +82,7 @@ class CreateNoteFragment :
                     etNoteDesc.setText(notes.noteText)
 
                     if (notes.imgPath != "") {
-                        selectedImagePath = notes.imgPath!!
+                        selectedImagePath = notes.imgPath ?: ""
                         imgNote.setImageBitmap(BitmapFactory.decodeFile(notes.imgPath))
                         layoutImage.visibility = View.VISIBLE
                         imgNote.visibility = View.VISIBLE
@@ -94,7 +94,7 @@ class CreateNoteFragment :
                     }
 
                     if (notes.webLink != "") {
-                        webLink = notes.webLink!!
+                        webLink = notes.webLink ?: ""
                         tvWebLink.text = notes.webLink
                         layoutWebUrl.visibility = View.VISIBLE
                         imgUrlDelete.visibility = View.VISIBLE
@@ -225,16 +225,16 @@ class CreateNoteFragment :
             }
             else -> {
                 viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                    val notes = Notes()
-                    notes.title = etNoteTitle?.text.toString()
-                    notes.noteText = etNoteDesc?.text.toString()
-                    notes.dateTime = currentTime
-                    notes.color = selectedColor
-                    notes.imgPath = selectedImagePath
-                    notes.webLink = webLink
+                    val noteEntity = NoteEntity()
+                    noteEntity.title = etNoteTitle?.text.toString()
+                    noteEntity.noteText = etNoteDesc?.text.toString()
+                    noteEntity.dateTime = currentTime
+                    noteEntity.color = selectedColor
+                    noteEntity.imgPath = selectedImagePath
+                    noteEntity.webLink = webLink
 
                     context?.let {
-                        NotesDataBase.getDataBase(it).noteDao().insertNotes(notes)
+                        NotesDataBase.getDataBase(it).noteDao().insertNotes(noteEntity)
                         etNoteTitle?.setText("")
                         etNoteDesc?.setText("")
                         binding.layoutImage.visibility = View.GONE
@@ -287,53 +287,56 @@ class CreateNoteFragment :
     private val BroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
 
-            val actionColor = p1!!.getStringExtra("action")
+            if (p1 == null)
+                return
+
+            val actionColor = p1.getStringExtra("action")
 
             binding.apply {
-                when (actionColor!!) {
+                when (actionColor) {
 
                     "Blue" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Cyan" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Green" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Orange" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Purple" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Red" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Yellow" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Brown" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Indigo" -> {
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
@@ -354,7 +357,7 @@ class CreateNoteFragment :
                         binding.layoutImage.visibility = View.GONE
                         imgNote.visibility = View.GONE
                         binding.layoutWebUrl.visibility = View.GONE
-                        selectedColor = p1.getStringExtra("selectedColor")!!
+                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }
@@ -421,7 +424,7 @@ class CreateNoteFragment :
                         binding.imgNote.visibility = View.VISIBLE
                         binding.layoutImage.visibility = View.VISIBLE
 
-                        selectedImagePath = getPathFromUri(selectedImageUrl)!!
+                        selectedImagePath = getPathFromUri(selectedImageUrl) ?: ""
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                     }
