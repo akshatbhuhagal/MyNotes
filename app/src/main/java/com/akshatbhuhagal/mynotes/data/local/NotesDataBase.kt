@@ -10,19 +10,5 @@ import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 @Database(entities = [NoteEntity::class], version = 1, exportSchema = false)
 abstract class NotesDataBase : RoomDatabase() {
 
-    companion object {
-
-        private var notesDataBase: NotesDataBase? = null
-
-        @Synchronized
-        fun getDataBase(context: Context): NotesDataBase {
-            return notesDataBase ?: Room.databaseBuilder(
-                context, NotesDataBase::class.java, "notes.db")
-                .build().also {
-                    notesDataBase = it
-            }
-        }
-    }
-
     abstract fun noteDao(): NoteDao
 }

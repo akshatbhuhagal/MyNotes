@@ -2,12 +2,13 @@ package com.akshatbhuhagal.mynotes.data.local.dao
 
 import androidx.room.*
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
-    suspend fun getAllNotes(): List<NoteEntity>
+    fun getAllNotes(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getSpecificNote(id: Int): NoteEntity
