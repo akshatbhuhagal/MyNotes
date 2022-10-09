@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.R
@@ -12,21 +13,20 @@ import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import java.util.*
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
     var arrNotes = ArrayList<NoteEntity>()
-    var notesAdapter: NotesAdapter = NotesAdapter()
+    private lateinit var notesAdapter: NotesAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    private val viewModel by viewModels<HomeViewModel>()
 
     companion object {
         @JvmStatic
@@ -40,21 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            context?.let {
-
-                val notes = NotesDataBase.getDataBase(it).noteDao().getAllNotes()
-                notesAdapter.setData(notes)
-                arrNotes = notes as ArrayList<NoteEntity>
-                binding.recyclerView.adapter = notesAdapter
-            }
-        }
-
-        notesAdapter.setOnClickListener(onClicked)
+        setUpRv()
+        collectNotes()
 
         // FAB CREATE NOTE FRAGMENT
         binding.fabCreateNoteBtn.setOnClickListener {
@@ -69,19 +56,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
-
-                    val tempArr = ArrayList<NoteEntity>()
-
-                    for (arr in arrNotes) {
-                        arr.title?.let {
-                            if (it.toLowerCase(Locale.getDefault()).contains(p0.toString())) {
-                                tempArr.add(arr)
-                            }
-                        }
-
-                    }
-                    notesAdapter.setData(tempArr)
-                    notesAdapter.notifyDataSetChanged()
+                    viewModel.onSearchQueryChanged(p0.toString())
                     return true
                 }
             })
@@ -98,6 +73,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             replaceFragment(fragment, true)
         }
+    }
+
+    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewModel.notes.collectLatest {
+            if(it.isNotEmpty())
+                notesAdapter.setData(it as ArrayList)
+            else notesAdapter.setData(ArrayList())
+            notesAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun setUpRv() = binding.apply {
+        notesAdapter = NotesAdapter().apply { setOnClickListener(onClicked) }
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = notesAdapter
     }
 
     fun replaceFragment(fragment: Fragment, istransition: Boolean) {

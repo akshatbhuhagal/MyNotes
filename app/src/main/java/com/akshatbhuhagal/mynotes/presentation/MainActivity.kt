@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.databinding.ActivityMainBinding
 import com.akshatbhuhagal.mynotes.presentation.home.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

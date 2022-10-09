@@ -60,6 +60,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
+    implementation 'androidx.fragment:fragment-ktx:1.5.3'
 
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"

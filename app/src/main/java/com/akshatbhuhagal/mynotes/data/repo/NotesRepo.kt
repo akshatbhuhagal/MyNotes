@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class NotesRepo @Inject constructor(private val notesDao: NoteDao) {
 
-    fun getAllNotes() = notesDao.getAllNotes()
+    val notes = notesDao.getAllNotes()
 
     suspend fun getNote(id: Int) = withContext(Dispatchers.IO) {
         notesDao.getSpecificNote(id)
