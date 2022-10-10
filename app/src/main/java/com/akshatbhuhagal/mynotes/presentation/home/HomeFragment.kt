@@ -8,22 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentHomeBinding
-import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import java.util.*
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
-    var arrNotes = ArrayList<NoteEntity>()
     private lateinit var notesAdapter: NotesAdapter
 
     private val viewModel by viewModels<HomeViewModel>()
@@ -77,10 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
         viewModel.notes.collectLatest {
-            if(it.isNotEmpty())
-                notesAdapter.setData(it as ArrayList)
-            else notesAdapter.setData(ArrayList())
-            notesAdapter.notifyDataSetChanged()
+            notesAdapter.submitList(it)
         }
     }
 
