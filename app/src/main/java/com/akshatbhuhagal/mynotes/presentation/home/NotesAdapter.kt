@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
+import com.akshatbhuhagal.mynotes.util.extensions.makeGone
+import com.akshatbhuhagal.mynotes.util.extensions.makeInvisible
+import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import kotlinx.android.synthetic.main.item_rv_notes.view.*
 
 class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffCallback) {
@@ -52,16 +55,16 @@ class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffC
 
         if (item.imgPath != null) {
             holder.itemView.imgNote.setImageBitmap(BitmapFactory.decodeFile(item.imgPath))
-            holder.itemView.imgNote.visibility = View.VISIBLE
+            holder.itemView.imgNote.makeVisible()
         } else {
-            holder.itemView.imgNote.visibility = View.GONE
+            holder.itemView.imgNote.makeGone()
         }
 
         if (item.webLink != null) {
             holder.itemView.tvWebLink.text = item.webLink
-            holder.itemView.tvWebLink.visibility = View.VISIBLE
+            holder.itemView.tvWebLink.makeVisible()
         } else {
-            holder.itemView.tvWebLink.visibility = View.GONE
+            holder.itemView.tvWebLink.makeGone()
         }
 
         holder.itemView.cardView.setOnClickListener {
