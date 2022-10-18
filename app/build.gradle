@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -43,7 +44,9 @@ android {
 
 }
 
-
+kapt{
+    correctErrorTypes true
+}
 
 dependencies {
 
@@ -57,6 +60,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
+    implementation 'androidx.fragment:fragment-ktx:1.5.3'
 
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
@@ -76,6 +80,10 @@ dependencies {
     // UI
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"

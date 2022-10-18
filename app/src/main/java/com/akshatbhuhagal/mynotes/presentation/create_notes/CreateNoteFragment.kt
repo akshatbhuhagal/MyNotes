@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
@@ -23,17 +24,21 @@ import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class CreateNoteFragment :
     Fragment(R.layout.fragment_create_note),
     EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
     private val binding by viewBinding(FragmentCreateNoteBinding::bind)
+    private val viewModel by viewModels<CreateNoteViewModel>()
 
     var selectedColor = "#3e434e"
     private var currentTime: String? = null
@@ -45,12 +50,12 @@ class CreateNoteFragment :
     private var webLink = ""
     private var selectedImagePath = ""
 
-    private var noteId = -1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        noteId = requireArguments().getInt("noteId", -1)
+        requireArguments().getInt("noteId", -1).also {
+            if(it != -1) viewModel.setNoteId(it)
+        }
     }
 
     companion object {
@@ -66,47 +71,45 @@ class CreateNoteFragment :
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        collectNotes()
+    }
+
+    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewModel.note.collectLatest {
+            it?.let(this@CreateNoteFragment::setNoteDataInUI)
+        }
+    }
+
+    private fun setNoteDataInUI(note: NoteEntity) = binding.apply {
+        colorView.setBackgroundColor(Color.parseColor(note.color))
+        etNoteTitle.setText(note.title)
+        etNoteDesc.setText(note.noteText)
+
+        if (note.imgPath != "") {
+            selectedImagePath = note.imgPath ?: ""
+            imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
+            layoutImage.visibility = View.VISIBLE
+            imgNote.visibility = View.VISIBLE
+            imgDelete.visibility = View.VISIBLE
+        } else {
+            layoutImage.visibility = View.GONE
+            imgNote.visibility = View.GONE
+            imgDelete.visibility = View.GONE
+        }
+
+        if (note.webLink != "") {
+            webLink = note.webLink ?: ""
+            tvWebLink.text = note.webLink
+            layoutWebUrl.visibility = View.VISIBLE
+            imgUrlDelete.visibility = View.VISIBLE
+            etWebLink.setText(note.webLink)
+        } else {
+            imgUrlDelete.visibility = View.GONE
+            layoutWebUrl.visibility = View.GONE
+        }
     }
 
     private fun initViews() = binding.apply {
-        if (noteId != -1) {
-
-            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                context?.let {
-
-                    val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
-
-                    colorView.setBackgroundColor(Color.parseColor(notes.color))
-
-                    etNoteTitle.setText(notes.title)
-                    etNoteDesc.setText(notes.noteText)
-
-                    if (notes.imgPath != "") {
-                        selectedImagePath = notes.imgPath ?: ""
-                        imgNote.setImageBitmap(BitmapFactory.decodeFile(notes.imgPath))
-                        layoutImage.visibility = View.VISIBLE
-                        imgNote.visibility = View.VISIBLE
-                        imgDelete.visibility = View.VISIBLE
-                    } else {
-                        layoutImage.visibility = View.GONE
-                        imgNote.visibility = View.GONE
-                        imgDelete.visibility = View.GONE
-                    }
-
-                    if (notes.webLink != "") {
-                        webLink = notes.webLink ?: ""
-                        tvWebLink.text = notes.webLink
-                        layoutWebUrl.visibility = View.VISIBLE
-                        imgUrlDelete.visibility = View.VISIBLE
-                        etWebLink.setText(notes.webLink)
-                    } else {
-                        imgUrlDelete.visibility = View.GONE
-                        layoutWebUrl.visibility = View.GONE
-                    }
-                }
-            }
-        }
-
         // Register & Unregister broadcast receiver
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             BroadcastReceiver, IntentFilter("bottom_sheet_action")
@@ -122,12 +125,7 @@ class CreateNoteFragment :
 
         // Done
         imgDone.setOnClickListener {
-
-            if (noteId != -1) {
-                updateNote()
-            } else {
-                saveNote()
-            }
+            viewModel.note.value?.let { updateNote(it) } ?: saveNote()
         }
 
         // Back Button
@@ -137,7 +135,7 @@ class CreateNoteFragment :
 
         // Show More Button
         imgMore.setOnClickListener {
-            val noteBottomSheetFragment = NoteBottomSheetFragment.newInstance(noteId)
+            val noteBottomSheetFragment = NoteBottomSheetFragment.newInstance(viewModel.noteId.value)
             noteBottomSheetFragment.show(
                 requireActivity().supportFragmentManager,
                 "Note Bottom Sheet Fragment"
@@ -159,7 +157,7 @@ class CreateNoteFragment :
         }
 
         btnCancel.setOnClickListener {
-            if (noteId != -1) {
+            if (viewModel.noteId.value != null) {
                 tvWebLink.visibility = View.VISIBLE
                 layoutWebUrl.visibility = View.GONE
             } else {
@@ -180,29 +178,25 @@ class CreateNoteFragment :
         }
     }
 
-    private fun updateNote() {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            context?.let {
-                val notes = NotesDataBase.getDataBase(it).noteDao().getSpecificNote(noteId)
-
-                notes.title = binding.etNoteTitle.text.toString()
-                notes.noteText = binding.etNoteDesc.text.toString()
-                notes.dateTime = currentTime
-                notes.color = selectedColor
-                notes.imgPath = selectedImagePath
-                notes.webLink = webLink
-
-                NotesDataBase.getDataBase(it).noteDao().updateNotes(notes)
-                binding.etNoteTitle.setText("")
-                binding.etNoteDesc.setText("")
-                binding.layoutImage.visibility = View.GONE
-                binding.imgNote.visibility = View.GONE
-                binding.tvWebLink.visibility = View.GONE
-                requireActivity().supportFragmentManager.popBackStack()
-            }
+    private fun updateNote(note: NoteEntity) = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        note.apply {
+            title = binding.etNoteTitle.text.toString()
+            noteText = binding.etNoteDesc.text.toString()
+            dateTime = currentTime
+            color = selectedColor
+            imgPath = selectedImagePath
+            webLink = webLink
+        }.also {
+            viewModel.updateNote(it)
         }
+        binding.etNoteTitle.setText("")
+        binding.etNoteDesc.setText("")
+        binding.layoutImage.visibility = View.GONE
+        binding.imgNote.visibility = View.GONE
+        binding.tvWebLink.visibility = View.GONE
+        requireActivity().supportFragmentManager.popBackStack()
     }
+
 
     private fun saveNote() {
 
@@ -225,36 +219,30 @@ class CreateNoteFragment :
             }
             else -> {
                 viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                    val noteEntity = NoteEntity()
-                    noteEntity.title = etNoteTitle?.text.toString()
-                    noteEntity.noteText = etNoteDesc?.text.toString()
-                    noteEntity.dateTime = currentTime
-                    noteEntity.color = selectedColor
-                    noteEntity.imgPath = selectedImagePath
-                    noteEntity.webLink = webLink
-
-                    context?.let {
-                        NotesDataBase.getDataBase(it).noteDao().insertNotes(noteEntity)
-                        etNoteTitle?.setText("")
-                        etNoteDesc?.setText("")
-                        binding.layoutImage.visibility = View.GONE
-                        binding.imgNote.visibility = View.GONE
-                        binding.tvWebLink.visibility = View.GONE
-                        requireActivity().supportFragmentManager.popBackStack()
+                    NoteEntity().apply {
+                        title = etNoteTitle?.text.toString()
+                        noteText = etNoteDesc?.text.toString()
+                        dateTime = currentTime
+                        color = selectedColor
+                        imgPath = selectedImagePath
+                        webLink = webLink
+                    }.also {
+                        viewModel.saveNote(it)
                     }
+                    etNoteTitle?.setText("")
+                    etNoteDesc?.setText("")
+                    binding.layoutImage.visibility = View.GONE
+                    binding.imgNote.visibility = View.GONE
+                    binding.tvWebLink.visibility = View.GONE
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
             }
         }
     }
 
-    private fun deleteNote() {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            context?.let {
-                NotesDataBase.getDataBase(it).noteDao().deleteSpecificNote(noteId)
-                requireActivity().supportFragmentManager.popBackStack()
-            }
-        }
+    private fun deleteNote() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewModel.deleteNote()
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     private fun checkWebUrl() {

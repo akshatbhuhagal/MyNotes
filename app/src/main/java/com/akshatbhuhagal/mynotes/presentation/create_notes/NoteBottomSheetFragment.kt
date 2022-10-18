@@ -19,9 +19,9 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
 
-        var noteId = -1
+        var noteId:Int? = null
 
-        fun newInstance(id: Int): NoteBottomSheetFragment {
+        fun newInstance(id: Int?): NoteBottomSheetFragment {
             val args = Bundle()
             val fragment = NoteBottomSheetFragment()
             fragment.arguments = args
@@ -84,7 +84,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (noteId != -1) {
+        if (noteId != null) {
             layoutDeleteNote.visibility = View.VISIBLE
         } else {
             layoutDeleteNote.visibility = View.GONE
