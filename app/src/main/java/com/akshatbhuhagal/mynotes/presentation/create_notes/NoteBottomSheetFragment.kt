@@ -1,5 +1,6 @@
 package com.akshatbhuhagal.mynotes.presentation.create_notes
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
 
@@ -42,7 +44,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
 
         if (behavior is BottomSheetBehavior<*>) {
 
-            behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     var state = ""
