@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         
     }
 
-    fun replaceFragment(fragment: Fragment, istransition: Boolean) {
+    private fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
 
         val fragmentTransition = supportFragmentManager.beginTransaction()
 
-        if (istransition) {
+        if (isTransition) {
             fragmentTransition.setCustomAnimations(
                 android.R.anim.slide_out_right,
                 android.R.anim.slide_in_left
