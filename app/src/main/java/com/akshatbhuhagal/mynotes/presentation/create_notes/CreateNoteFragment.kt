@@ -15,10 +15,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.util.extensions.EMPTY_STRING
@@ -92,6 +92,7 @@ class CreateNoteFragment :
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
             makeVisible(layoutImage,imgNote.imgDelete)
         } else {
+            /* Comment this function if application is crashing */
             makeGone(layoutImage,imgNote.imgDelete)
         }
 
@@ -101,6 +102,7 @@ class CreateNoteFragment :
             makeVisible(layoutWebUrl,imgUrlDelete)
             etWebLink.setText(note.webLink)
         } else {
+            /* Comment this function if application is crashing */
             makeGone(imgUrlDelete,layoutWebUrl)
         }
     }
