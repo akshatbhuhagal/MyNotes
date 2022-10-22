@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
+import com.akshatbhuhagal.mynotes.util.extensions.EMPTY_STRING
+import com.akshatbhuhagal.mynotes.util.extensions.makeGone
+import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
@@ -45,7 +48,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    var state = ""
+                    var state = EMPTY_STRING
                     while (newState == newState) {
                         BottomSheetBehavior.STATE_DRAGGING.apply {
                             state = "DRAGGING"
@@ -85,9 +88,9 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (noteId != null) {
-            layoutDeleteNote.visibility = View.VISIBLE
+            layoutDeleteNote.makeVisible()
         } else {
-            layoutDeleteNote.visibility = View.GONE
+            layoutDeleteNote.makeGone()
         }
         setListener()
     }

@@ -15,16 +15,19 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
 import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
+import com.akshatbhuhagal.mynotes.util.extensions.EMPTY_STRING
+import com.akshatbhuhagal.mynotes.util.extensions.makeGone
+import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_create_note.view.*
 import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -47,16 +50,15 @@ class CreateNoteFragment :
     private var READ_STORAGE_PERM = 123
     private var REQUEST_CODE_IMAGE = 456
 
-    private var webLink = ""
-    private var selectedImagePath = ""
+    private var webLink = EMPTY_STRING
+    private var selectedImagePath = EMPTY_STRING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         requireArguments().getInt("noteId", -1).also {
             if(it != -1) viewModel.setNoteId(it)
-        }
-    }
+        }    }
 
     companion object {
         @JvmStatic
@@ -85,27 +87,21 @@ class CreateNoteFragment :
         etNoteTitle.setText(note.title)
         etNoteDesc.setText(note.noteText)
 
-        if (note.imgPath != "") {
-            selectedImagePath = note.imgPath ?: ""
+        if (note.imgPath != EMPTY_STRING) {
+            selectedImagePath = note.imgPath.orEmpty()
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-            layoutImage.visibility = View.VISIBLE
-            imgNote.visibility = View.VISIBLE
-            imgDelete.visibility = View.VISIBLE
+            makeVisible(layoutImage,imgNote.imgDelete)
         } else {
-            layoutImage.visibility = View.GONE
-            imgNote.visibility = View.GONE
-            imgDelete.visibility = View.GONE
+            makeGone(layoutImage,imgNote.imgDelete)
         }
 
-        if (note.webLink != "") {
-            webLink = note.webLink ?: ""
+        if (note.webLink != EMPTY_STRING) {
+            webLink = note.webLink.orEmpty()
             tvWebLink.text = note.webLink
-            layoutWebUrl.visibility = View.VISIBLE
-            imgUrlDelete.visibility = View.VISIBLE
+            makeVisible(layoutWebUrl,imgUrlDelete)
             etWebLink.setText(note.webLink)
         } else {
-            imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View.GONE
+            makeGone(imgUrlDelete,layoutWebUrl)
         }
     }
 
@@ -144,7 +140,7 @@ class CreateNoteFragment :
 
         // Delete Image
         imgDelete.setOnClickListener {
-            selectedImagePath = ""
+            selectedImagePath = EMPTY_STRING
             layoutImage.visibility = View.GONE
         }
 
@@ -158,18 +154,16 @@ class CreateNoteFragment :
 
         btnCancel.setOnClickListener {
             if (viewModel.noteId.value != null) {
-                tvWebLink.visibility = View.VISIBLE
-                layoutWebUrl.visibility = View.GONE
+                tvWebLink.makeVisible()
+                layoutWebUrl.makeGone()
             } else {
-                layoutWebUrl.visibility = View.GONE
+                layoutWebUrl.makeGone()
             }
         }
 
         imgUrlDelete.setOnClickListener {
-            webLink = ""
-            tvWebLink.visibility = View.GONE
-            imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View.GONE
+            webLink = EMPTY_STRING
+            makeGone(tvWebLink, imgUrlDelete, layoutWebUrl)
         }
 
         tvWebLink.setOnClickListener {
@@ -189,14 +183,17 @@ class CreateNoteFragment :
         }.also {
             viewModel.updateNote(it)
         }
-        binding.etNoteTitle.setText("")
-        binding.etNoteDesc.setText("")
-        binding.layoutImage.visibility = View.GONE
-        binding.imgNote.visibility = View.GONE
-        binding.tvWebLink.visibility = View.GONE
+        binding.etNoteTitle.setText(EMPTY_STRING)
+        binding.etNoteDesc.setText(EMPTY_STRING)
+        makeGone(
+            with(binding) {
+                layoutImage
+                imgNote
+                tvWebLink
+            }
+        )
         requireActivity().supportFragmentManager.popBackStack()
     }
-
 
     private fun saveNote() {
 
@@ -229,11 +226,13 @@ class CreateNoteFragment :
                     }.also {
                         viewModel.saveNote(it)
                     }
-                    etNoteTitle?.setText("")
-                    etNoteDesc?.setText("")
-                    binding.layoutImage.visibility = View.GONE
-                    binding.imgNote.visibility = View.GONE
-                    binding.tvWebLink.visibility = View.GONE
+                    etNoteTitle?.setText(EMPTY_STRING)
+                    etNoteDesc?.setText(EMPTY_STRING)
+                    makeGone(with(binding) {
+                        layoutImage
+                        imgNote
+                        tvWebLink
+                    })
                     requireActivity().supportFragmentManager.popBackStack()
                 }
             }
@@ -247,10 +246,10 @@ class CreateNoteFragment :
 
     private fun checkWebUrl() {
         if (Patterns.WEB_URL.matcher(binding.etWebLink.text.toString()).matches()) {
-            binding.layoutWebUrl.visibility = View.GONE
+            binding.layoutWebUrl.makeGone()
             binding.etWebLink.isEnabled = false
             webLink = binding.etWebLink.text.toString()
-            binding.tvWebLink.visibility = View.VISIBLE
+            binding.tvWebLink.makeVisible()
             binding.tvWebLink.text = binding.etWebLink.text.toString()
         } else {
             Toast.makeText(requireContext(), "Url is not Valid", Toast.LENGTH_SHORT).show()
@@ -284,57 +283,57 @@ class CreateNoteFragment :
                 when (actionColor) {
 
                     "Blue" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Cyan" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Green" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Orange" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Purple" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Red" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Yellow" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Brown" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Indigo" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     "Image" -> {
                         readStorageTask()
-                        binding.layoutWebUrl.visibility = View.GONE
+                        binding.layoutWebUrl.makeGone()
                     }
 
                     "WebUrl" -> {
-                        binding.layoutWebUrl.visibility = View.VISIBLE
+                        binding.layoutWebUrl.makeVisible()
                     }
 
                     "DeleteNote" -> {
@@ -342,10 +341,12 @@ class CreateNoteFragment :
                     }
 
                     else -> {
-                        binding.layoutImage.visibility = View.GONE
-                        imgNote.visibility = View.GONE
-                        binding.layoutWebUrl.visibility = View.GONE
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        makeGone(with(binding) {
+                            layoutImage
+                            imgNote
+                            layoutWebUrl
+                        })
+                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }
@@ -409,10 +410,11 @@ class CreateNoteFragment :
                             requireActivity().contentResolver.openInputStream(selectedImageUrl)
                         val bitmap = BitmapFactory.decodeStream(inputStream)
                         binding.imgNote.setImageBitmap(bitmap)
-                        binding.imgNote.visibility = View.VISIBLE
-                        binding.layoutImage.visibility = View.VISIBLE
-
-                        selectedImagePath = getPathFromUri(selectedImageUrl) ?: ""
+                        makeVisible(with(binding) {
+                            imgNote
+                            layoutImage
+                        })
+                        selectedImagePath = getPathFromUri(selectedImageUrl).orEmpty()
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                     }
