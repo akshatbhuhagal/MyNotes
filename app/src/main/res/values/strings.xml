@@ -6,4 +6,12 @@
     <string name="search_notes">Search Notes</string>
     <string name="notes">Notes</string>
     <string name="my_notes">My Notes</string>
+    <string name="date">Date</string>
+    <string name="notes_title">Notes Title</string>
+    <string name="https">https://</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="enter_notes_here">Enter Notes Here</string>
+    <string name="bottom_bar">bottom bar</string>
+    <string name="mynotes">MyNotes</string>
 </resources>

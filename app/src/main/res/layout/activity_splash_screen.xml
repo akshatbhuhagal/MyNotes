@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/manropebold"
         android:gravity="center_horizontal"
-        android:text="MyNotes"
+        android:text="@string/mynotes"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp"

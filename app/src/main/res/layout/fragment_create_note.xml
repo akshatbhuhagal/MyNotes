@@ -30,7 +30,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
         android:padding="5sp"
-        android:text="Date"
+        android:text="@string/date"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="13sp"
@@ -75,7 +75,7 @@
             android:layout_marginRight="20sp"
             android:background="@null"
             android:fontFamily="@font/manropebold"
-            android:hint="Notes Title"
+            android:hint="@string/notes_title"
             android:maxLines="1"
             android:paddingStart="5sp"
             android:paddingLeft="5sp"
@@ -143,7 +143,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:fontFamily="@font/exo2variablefont"
-                android:hint="https://"
+                android:hint="@string/https"
                 android:paddingLeft="13sp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white" />
@@ -180,7 +180,7 @@
                 android:layout_marginBottom="5sp"
                 android:background="@drawable/roundcorner"
                 android:fontFamily="@font/manropebold"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false" />
 
             <Button
@@ -195,7 +195,7 @@
                 android:layout_marginBottom="5sp"
                 android:background="@drawable/roundcorner"
                 android:fontFamily="@font/manropebold"
-                android:text="Ok"
+                android:text="@string/ok"
                 android:textAllCaps="false" />
 
         </LinearLayout>
@@ -228,7 +228,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@null"
         android:fontFamily="@font/exo2variablefont"
-        android:hint="Enter Notes Here"
+        android:hint="@string/enter_notes_here"
         android:paddingLeft="13sp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"

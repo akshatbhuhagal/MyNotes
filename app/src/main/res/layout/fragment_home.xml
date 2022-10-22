@@ -90,7 +90,7 @@
             android:layout_width="@dimen/_60sdp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:contentDescription="bottom bar"
+            android:contentDescription="@string/bottom_bar"
             android:src="@drawable/add_note"
             android:tint="@color/white"
             app:backgroundTint="#3e434e"
