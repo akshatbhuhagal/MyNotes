@@ -56,11 +56,16 @@ class CreateNoteFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requireArguments().getInt("noteId", -1).also {
+        requireArguments().getInt(getString(R.string.noteID), -1).also {
             if(it != -1) viewModel.setNoteId(it)
-        }    }
+        }
+    }
 
     companion object {
+
+        const val NOTE_BOTTOM_SHEET_TAG = "Note Bottom Sheet Fragment"
+        const val SELECTED_COLOR = "selectedColor"
+
         @JvmStatic
         fun newInstance() =
             CreateNoteFragment().apply {
@@ -136,7 +141,8 @@ class CreateNoteFragment :
             val noteBottomSheetFragment = NoteBottomSheetFragment.newInstance(viewModel.noteId.value)
             noteBottomSheetFragment.show(
                 requireActivity().supportFragmentManager,
-                "Note Bottom Sheet Fragment"
+                NOTE_BOTTOM_SHEET_TAG
+
             )
         }
 
@@ -150,7 +156,7 @@ class CreateNoteFragment :
             if (etWebLink.text.toString().trim().isNotEmpty()) {
                 checkWebUrl()
             } else {
-                Toast.makeText(requireContext(), "Url is Required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.url_require), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -197,6 +203,7 @@ class CreateNoteFragment :
         requireActivity().supportFragmentManager.popBackStack()
     }
 
+
     private fun saveNote() {
 
         val etNoteTitle = view?.findViewById<EditText>(R.id.etNoteTitle)
@@ -204,14 +211,14 @@ class CreateNoteFragment :
 
         when {
             etNoteTitle?.text.isNullOrEmpty() -> {
-                Snackbar.make(requireView(), "Title is Required", Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView(), getString(R.string.title_require), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.snackbarok)) { null }
                     .show()
             }
             etNoteDesc?.text.isNullOrEmpty() -> {
                 Snackbar.make(
                     requireView(),
-                    "Notes Description Must Not Be Empty",
+                    getString(R.string.empty_note_description_warning),
                     Snackbar.LENGTH_LONG
                 ).setAction(getString(R.string.snackbarok)) { null }
                     .show()
@@ -254,7 +261,7 @@ class CreateNoteFragment :
             binding.tvWebLink.makeVisible()
             binding.tvWebLink.text = binding.etWebLink.text.toString()
         } else {
-            Toast.makeText(requireContext(), "Url is not Valid", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.url_validation), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -279,76 +286,80 @@ class CreateNoteFragment :
             if (p1 == null)
                 return
 
-            val actionColor = p1.getStringExtra("action")
+            val actionColor = p1.getStringExtra(getString(R.string.action))
 
             binding.apply {
                 when (actionColor) {
 
-                    "Blue" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.blue) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Cyan" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.cyan) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Green" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.green) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Orange" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.orange) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Purple" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.purple) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Red" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.red) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Yellow" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.yellow) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Brown" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.brown) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Indigo" -> {
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                    getString(R.string.indigo) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Image" -> {
+                    getString(R.string.image) -> {
                         readStorageTask()
                         binding.layoutWebUrl.makeGone()
                     }
 
-                    "WebUrl" -> {
-                        binding.layoutWebUrl.makeVisible()
+                    getString(R.string.webUrl) -> {
+                        binding.layoutWebUrl.visibility = View.VISIBLE
                     }
 
-                    "DeleteNote" -> {
+                    getString(R.string.webUrl) -> {
                         deleteNote()
                     }
 
                     else -> {
+                        binding.layoutImage.visibility = View.GONE
+                        imgNote.visibility = View.GONE
+                        binding.layoutWebUrl.visibility = View.GONE
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         makeGone(with(binding) {
                             layoutImage
                             imgNote
                             layoutWebUrl
                         })
-                        selectedColor = p1.getStringExtra("selectedColor").orEmpty()
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR).orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }

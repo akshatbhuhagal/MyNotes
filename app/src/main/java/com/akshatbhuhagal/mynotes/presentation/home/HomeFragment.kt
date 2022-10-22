@@ -62,7 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             val fragment: Fragment
             val bundle = Bundle()
-            bundle.putInt("noteId", notesId)
+            bundle.putInt(getString(R.string.noteID), notesId)
             fragment = CreateNoteFragment.newInstance()
             fragment.arguments = bundle
 
