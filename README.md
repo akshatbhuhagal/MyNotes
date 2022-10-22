@@ -12,7 +12,7 @@ Written in Kotlin
 - **Delete Notes** - Delete Notes using One Touch.
 - **Web Url** - Add Website URL for storing Url.
 - **Add Image** - Add Images in Notes to keep it Awasome.
-- **Notes Colours** - Change/Add Differente colours of Notes.
+- **Notes Colours** - Change/Add Different colours of Notes.
 - **Re-edit Notes** - Re-edit or Update Your Notes.
 
 ### Contributing
