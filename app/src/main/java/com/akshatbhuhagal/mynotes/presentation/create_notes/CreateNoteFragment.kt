@@ -19,12 +19,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
-import com.akshatbhuhagal.mynotes.data.local.NotesDataBase
 import com.akshatbhuhagal.mynotes.databinding.FragmentCreateNoteBinding
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
+import com.akshatbhuhagal.mynotes.util.extensions.EMPTY_STRING
+import com.akshatbhuhagal.mynotes.util.extensions.makeGone
+import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_create_note.view.*
 import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -47,18 +50,22 @@ class CreateNoteFragment :
     private var READ_STORAGE_PERM = 123
     private var REQUEST_CODE_IMAGE = 456
 
-    private var webLink = ""
-    private var selectedImagePath = ""
+    private var webLink = EMPTY_STRING
+    private var selectedImagePath = EMPTY_STRING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requireArguments().getInt("noteId", -1).also {
+        requireArguments().getInt(getString(R.string.noteID), -1).also {
             if(it != -1) viewModel.setNoteId(it)
         }
     }
 
     companion object {
+
+        const val NOTE_BOTTOM_SHEET_TAG = "Note Bottom Sheet Fragment"
+        const val SELECTED_COLOR = "selectedColor"
+
         @JvmStatic
         fun newInstance() =
             CreateNoteFragment().apply {
@@ -85,27 +92,23 @@ class CreateNoteFragment :
         etNoteTitle.setText(note.title)
         etNoteDesc.setText(note.noteText)
 
-        if (note.imgPath != "") {
-            selectedImagePath = note.imgPath ?: ""
+        if (note.imgPath != EMPTY_STRING) {
+            selectedImagePath = note.imgPath.orEmpty()
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-            layoutImage.visibility = View.VISIBLE
-            imgNote.visibility = View.VISIBLE
-            imgDelete.visibility = View.VISIBLE
+            makeVisible(layoutImage,imgNote.imgDelete)
         } else {
-            layoutImage.visibility = View.GONE
-            imgNote.visibility = View.GONE
-            imgDelete.visibility = View.GONE
+            /* Comment this function if application is crashing */
+            makeGone(layoutImage,imgNote.imgDelete)
         }
 
-        if (note.webLink != "") {
-            webLink = note.webLink ?: ""
+        if (note.webLink != EMPTY_STRING) {
+            webLink = note.webLink.orEmpty()
             tvWebLink.text = note.webLink
-            layoutWebUrl.visibility = View.VISIBLE
-            imgUrlDelete.visibility = View.VISIBLE
+            makeVisible(layoutWebUrl,imgUrlDelete)
             etWebLink.setText(note.webLink)
         } else {
-            imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View.GONE
+            /* Comment this function if application is crashing */
+            makeGone(imgUrlDelete,layoutWebUrl)
         }
     }
 
@@ -138,13 +141,14 @@ class CreateNoteFragment :
             val noteBottomSheetFragment = NoteBottomSheetFragment.newInstance(viewModel.noteId.value)
             noteBottomSheetFragment.show(
                 requireActivity().supportFragmentManager,
-                "Note Bottom Sheet Fragment"
+                NOTE_BOTTOM_SHEET_TAG
+
             )
         }
 
         // Delete Image
         imgDelete.setOnClickListener {
-            selectedImagePath = ""
+            selectedImagePath = EMPTY_STRING
             layoutImage.visibility = View.GONE
         }
 
@@ -152,24 +156,22 @@ class CreateNoteFragment :
             if (etWebLink.text.toString().trim().isNotEmpty()) {
                 checkWebUrl()
             } else {
-                Toast.makeText(requireContext(), "Url is Required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.url_require), Toast.LENGTH_SHORT).show()
             }
         }
 
         btnCancel.setOnClickListener {
             if (viewModel.noteId.value != null) {
-                tvWebLink.visibility = View.VISIBLE
-                layoutWebUrl.visibility = View.GONE
+                tvWebLink.makeVisible()
+                layoutWebUrl.makeGone()
             } else {
-                layoutWebUrl.visibility = View.GONE
+                layoutWebUrl.makeGone()
             }
         }
 
         imgUrlDelete.setOnClickListener {
-            webLink = ""
-            tvWebLink.visibility = View.GONE
-            imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View.GONE
+            webLink = EMPTY_STRING
+            makeGone(tvWebLink, imgUrlDelete, layoutWebUrl)
         }
 
         tvWebLink.setOnClickListener {
@@ -189,11 +191,15 @@ class CreateNoteFragment :
         }.also {
             viewModel.updateNote(it)
         }
-        binding.etNoteTitle.setText("")
-        binding.etNoteDesc.setText("")
-        binding.layoutImage.visibility = View.GONE
-        binding.imgNote.visibility = View.GONE
-        binding.tvWebLink.visibility = View.GONE
+        binding.etNoteTitle.setText(EMPTY_STRING)
+        binding.etNoteDesc.setText(EMPTY_STRING)
+        makeGone(
+            with(binding) {
+                layoutImage
+                imgNote
+                tvWebLink
+            }
+        )
         requireActivity().supportFragmentManager.popBackStack()
     }
 
@@ -205,14 +211,14 @@ class CreateNoteFragment :
 
         when {
             etNoteTitle?.text.isNullOrEmpty() -> {
-                Snackbar.make(requireView(), "Title is Required", Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView(), getString(R.string.title_require), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.snackbarok)) { null }
                     .show()
             }
             etNoteDesc?.text.isNullOrEmpty() -> {
                 Snackbar.make(
                     requireView(),
-                    "Notes Description Must Not Be Empty",
+                    getString(R.string.empty_note_description_warning),
                     Snackbar.LENGTH_LONG
                 ).setAction(getString(R.string.snackbarok)) { null }
                     .show()
@@ -229,11 +235,13 @@ class CreateNoteFragment :
                     }.also {
                         viewModel.saveNote(it)
                     }
-                    etNoteTitle?.setText("")
-                    etNoteDesc?.setText("")
-                    binding.layoutImage.visibility = View.GONE
-                    binding.imgNote.visibility = View.GONE
-                    binding.tvWebLink.visibility = View.GONE
+                    etNoteTitle?.setText(EMPTY_STRING)
+                    etNoteDesc?.setText(EMPTY_STRING)
+                    makeGone(with(binding) {
+                        layoutImage
+                        imgNote
+                        tvWebLink
+                    })
                     requireActivity().supportFragmentManager.popBackStack()
                 }
             }
@@ -247,13 +255,13 @@ class CreateNoteFragment :
 
     private fun checkWebUrl() {
         if (Patterns.WEB_URL.matcher(binding.etWebLink.text.toString()).matches()) {
-            binding.layoutWebUrl.visibility = View.GONE
+            binding.layoutWebUrl.makeGone()
             binding.etWebLink.isEnabled = false
             webLink = binding.etWebLink.text.toString()
-            binding.tvWebLink.visibility = View.VISIBLE
+            binding.tvWebLink.makeVisible()
             binding.tvWebLink.text = binding.etWebLink.text.toString()
         } else {
-            Toast.makeText(requireContext(), "Url is not Valid", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.url_validation), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -278,66 +286,66 @@ class CreateNoteFragment :
             if (p1 == null)
                 return
 
-            val actionColor = p1.getStringExtra("action")
+            val actionColor = p1.getStringExtra(getString(R.string.action))
 
             binding.apply {
                 when (actionColor) {
 
-                    "Blue" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.blue) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Cyan" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.cyan) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Green" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.green) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Orange" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.orange) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Purple" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.purple) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Red" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.red) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Yellow" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.yellow) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Brown" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.brown) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Indigo" -> {
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                    getString(R.string.indigo) -> {
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
-                    "Image" -> {
+                    getString(R.string.image) -> {
                         readStorageTask()
-                        binding.layoutWebUrl.visibility = View.GONE
+                        binding.layoutWebUrl.makeGone()
                     }
 
-                    "WebUrl" -> {
+                    getString(R.string.webUrl) -> {
                         binding.layoutWebUrl.visibility = View.VISIBLE
                     }
 
-                    "DeleteNote" -> {
+                    getString(R.string.webUrl) -> {
                         deleteNote()
                     }
 
@@ -345,7 +353,13 @@ class CreateNoteFragment :
                         binding.layoutImage.visibility = View.GONE
                         imgNote.visibility = View.GONE
                         binding.layoutWebUrl.visibility = View.GONE
-                        selectedColor = p1.getStringExtra("selectedColor") ?: ""
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
+                        makeGone(with(binding) {
+                            layoutImage
+                            imgNote
+                            layoutWebUrl
+                        })
+                        selectedColor = p1.getStringExtra(SELECTED_COLOR).orEmpty()
                         colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }
@@ -409,10 +423,11 @@ class CreateNoteFragment :
                             requireActivity().contentResolver.openInputStream(selectedImageUrl)
                         val bitmap = BitmapFactory.decodeStream(inputStream)
                         binding.imgNote.setImageBitmap(bitmap)
-                        binding.imgNote.visibility = View.VISIBLE
-                        binding.layoutImage.visibility = View.VISIBLE
-
-                        selectedImagePath = getPathFromUri(selectedImageUrl) ?: ""
+                        makeVisible(with(binding) {
+                            imgNote
+                            layoutImage
+                        })
+                        selectedImagePath = getPathFromUri(selectedImageUrl).orEmpty()
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                     }
