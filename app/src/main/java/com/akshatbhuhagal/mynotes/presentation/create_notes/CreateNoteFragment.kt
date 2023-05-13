@@ -27,7 +27,6 @@ import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_create_note.view.*
 import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -95,10 +94,10 @@ class CreateNoteFragment :
         if (note.imgPath != EMPTY_STRING) {
             selectedImagePath = note.imgPath.orEmpty()
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-            makeVisible(layoutImage,imgNote.imgDelete)
+            makeVisible(layoutImage,binding.imgDelete)
         } else {
             /* Comment this function if application is crashing */
-            makeGone(layoutImage,imgNote.imgDelete)
+            makeGone(layoutImage,binding.imgDelete)
         }
 
         if (note.webLink != EMPTY_STRING) {

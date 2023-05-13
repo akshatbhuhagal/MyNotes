@@ -10,15 +10,17 @@ import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akshatbhuhagal.mynotes.R
+import com.akshatbhuhagal.mynotes.databinding.FragmentNotesBottomSheetBinding
 import com.akshatbhuhagal.mynotes.util.extensions.EMPTY_STRING
 import com.akshatbhuhagal.mynotes.util.extensions.makeGone
 import com.akshatbhuhagal.mynotes.util.extensions.makeVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
 
 class NoteBottomSheetFragment : BottomSheetDialogFragment() {
 
+    private var _binding: FragmentNotesBottomSheetBinding? = null
+    private val binding get() = _binding!!
     private var selectedColor = "#3e434e"
 
     companion object {
@@ -88,220 +90,229 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notes_bottom_sheet, container, false)
+    ): View {
+        _binding = FragmentNotesBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (noteId != null) {
-            layoutDeleteNote.makeVisible()
+            binding.layoutDeleteNote.makeVisible()
         } else {
-            layoutDeleteNote.makeGone()
+            binding.layoutDeleteNote.makeGone()
         }
         setListener()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun setListener() {
 
-        fNoteBlue.setOnClickListener {
+        binding.apply {
 
-            imgNoteBlue.setImageResource(R.drawable.donecheck)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#2196f3"
+            fNoteBlue.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.blue))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(R.drawable.donecheck)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#2196f3"
 
-        fNoteCyan.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.blue))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(R.drawable.donecheck)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#00e5ff"
+            fNoteCyan.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.cyan))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(R.drawable.donecheck)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#00e5ff"
 
-        fNoteGreen.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.cyan))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(R.drawable.donecheck)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#00c853"
+            fNoteGreen.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.green))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(R.drawable.donecheck)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#00c853"
 
-        fNoteOrange.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.green))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(R.drawable.donecheck)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#ff6d00"
+            fNoteOrange.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.orange))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(R.drawable.donecheck)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#ff6d00"
 
-        fNotePurple.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.orange))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(R.drawable.donecheck)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#aa00ff"
+            fNotePurple.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.purple))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(R.drawable.donecheck)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#aa00ff"
 
-        fNoteRed.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.purple))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(R.drawable.donecheck)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#d50000"
+            fNoteRed.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.red))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(R.drawable.donecheck)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#d50000"
 
-        fNoteYellow.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.red))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(R.drawable.donecheck)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#ffeb3b"
+            fNoteYellow.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.yellow))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(R.drawable.donecheck)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#ffeb3b"
 
-        fNoteBrown.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.yellow))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(R.drawable.donecheck)
-            imgNoteIndigo.setImageResource(0)
-            selectedColor = "#3e2723"
+            fNoteBrown.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.brown))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(R.drawable.donecheck)
+                imgNoteIndigo.setImageResource(0)
+                selectedColor = "#3e2723"
 
-        fNoteIndigo.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.brown))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
 
-            imgNoteBlue.setImageResource(0)
-            imgNoteCyan.setImageResource(0)
-            imgNoteGreen.setImageResource(0)
-            imgNoteOrange.setImageResource(0)
-            imgNotePurple.setImageResource(0)
-            imgNoteRed.setImageResource(0)
-            imgNoteYellow.setImageResource(0)
-            imgNoteBrown.setImageResource(0)
-            imgNoteIndigo.setImageResource(R.drawable.donecheck)
-            selectedColor = "#1a237e"
+            fNoteIndigo.setOnClickListener {
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.indigo))
-            intent.putExtra(getString(R.string.selected_color), selectedColor)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-        }
-        // FINISH COLORS
+                imgNoteBlue.setImageResource(0)
+                imgNoteCyan.setImageResource(0)
+                imgNoteGreen.setImageResource(0)
+                imgNoteOrange.setImageResource(0)
+                imgNotePurple.setImageResource(0)
+                imgNoteRed.setImageResource(0)
+                imgNoteYellow.setImageResource(0)
+                imgNoteBrown.setImageResource(0)
+                imgNoteIndigo.setImageResource(R.drawable.donecheck)
+                selectedColor = "#1a237e"
 
-        // ADD IMAGE
-        layoutImage.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.indigo))
+                intent.putExtra(getString(R.string.selected_color), selectedColor)
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            }
+            // FINISH COLORS
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.image))
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-            dismiss()
-        }
+            // ADD IMAGE
+            layoutImage.setOnClickListener {
 
-        // ADD URL
-        layoutWebUrl.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.image))
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+                dismiss()
+            }
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.webUrl))
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-            dismiss()
-        }
+            // ADD URL
+            layoutWebUrl.setOnClickListener {
 
-        // Delete Notes
-        layoutDeleteNote.setOnClickListener {
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.webUrl))
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+                dismiss()
+            }
 
-            val intent = Intent(getString(R.string.bottom_sheet_action))
-            intent.putExtra(getString(R.string.action), getString(R.string.deleteNote))
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-            dismiss()
+            // Delete Notes
+            layoutDeleteNote.setOnClickListener {
+
+                val intent = Intent(getString(R.string.bottom_sheet_action))
+                intent.putExtra(getString(R.string.action), getString(R.string.deleteNote))
+                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+                dismiss()
+            }
         }
     }
 }
