@@ -38,8 +38,9 @@ class MainActivity : AppCompatActivity() {
         fragmentTransition.commit()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        super.onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
         finish()
     }
 
