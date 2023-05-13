@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:8.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -22,18 +22,18 @@ task clean(type: Delete) {
 }
 
 ext {
-    activityVersion = '1.2.3'
-    appCompatVersion = '1.3.0'
-    constraintLayoutVersion = '2.0.4'
-    coreTestingVersion = '2.1.0'
-    coroutines = '1.5.0'
-    lifecycleVersion = '2.3.1'
-    materialVersion = '1.3.0'
-    roomVersion = '2.4.0-alpha04'
-    hiltVersion = '2.44'
+    activityVersion = '1.7.1'
+    appCompatVersion = '1.6.1'
+    constraintLayoutVersion = '2.1.4'
+    coreTestingVersion = '2.2.0'
+    coroutines = '1.6.4'
+    lifecycleVersion = '2.6.1'
+    materialVersion = '1.9.0'
+    roomVersion = '2.6.0-alpha01'
+    hiltVersion = '2.46'
     // testing
     junitVersion = '4.13.2'
     espressoVersion = '3.1.0'
-    androidxJunitVersion = '1.1.2'
+    androidxJunitVersion = '1.1.5'
 }
 
