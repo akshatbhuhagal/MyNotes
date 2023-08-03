@@ -13,6 +13,7 @@ import com.akshatbhuhagal.mynotes.presentation.create_notes.CreateNoteFragment
 import com.akshatbhuhagal.mynotes.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -70,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launch {
         viewModel.notes.collectLatest {
             notesAdapter.submitList(it)
         }
@@ -84,11 +85,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         recyclerView.adapter = notesAdapter
     }
 
-    fun replaceFragment(fragment: Fragment, istransition: Boolean) {
+    fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
 
         val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
 
-        if (istransition) {
+        if (isTransition) {
             fragmentTransition.setCustomAnimations(
                 android.R.anim.slide_out_right,
                 android.R.anim.slide_in_left

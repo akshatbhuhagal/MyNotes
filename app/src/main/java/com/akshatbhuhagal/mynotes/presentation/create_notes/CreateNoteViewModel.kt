@@ -1,12 +1,10 @@
 package com.akshatbhuhagal.mynotes.presentation.create_notes
 
-import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.data.repo.NotesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

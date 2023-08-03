@@ -14,7 +14,7 @@ class HomeViewModel @Inject constructor(private val notesRepo: NotesRepo) : View
     private val searchQuery = MutableStateFlow("")
 
     val notes = searchQuery.flatMapLatest { query->
-        notesRepo.notes.map { it.filter { it.title?.contains(query, ignoreCase = true) == true } }
+        notesRepo.notes.map { it -> it.filter { it.title?.contains(query, ignoreCase = true) == true } }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     fun onSearchQueryChanged(query:String) = viewModelScope.launch {

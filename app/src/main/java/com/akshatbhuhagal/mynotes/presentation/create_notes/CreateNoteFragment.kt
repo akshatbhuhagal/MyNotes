@@ -94,10 +94,9 @@ class CreateNoteFragment :
         if (note.imgPath != EMPTY_STRING) {
             selectedImagePath = note.imgPath.orEmpty()
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-            makeVisible(layoutImage,binding.imgDelete)
+            makeVisible(layoutImage,binding.imgNote, binding.imgDelete)
         } else {
-            /* Comment this function if application is crashing */
-            makeGone(layoutImage,binding.imgDelete)
+            makeGone(layoutImage,binding.imgNote, binding.imgDelete)
         }
 
         if (note.webLink != EMPTY_STRING) {
@@ -106,7 +105,6 @@ class CreateNoteFragment :
             makeVisible(layoutWebUrl,imgUrlDelete)
             etWebLink.setText(note.webLink)
         } else {
-            /* Comment this function if application is crashing */
             makeGone(imgUrlDelete,layoutWebUrl)
         }
     }
@@ -211,16 +209,18 @@ class CreateNoteFragment :
         when {
             etNoteTitle?.text.isNullOrEmpty() -> {
                 Snackbar.make(requireView(), getString(R.string.title_require), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.snackbarok)) { null }
-                    .show()
+                    .setAction(getString(R.string.snackbarok)) {
+
+                    }.show()
             }
             etNoteDesc?.text.isNullOrEmpty() -> {
                 Snackbar.make(
                     requireView(),
                     getString(R.string.empty_note_description_warning),
                     Snackbar.LENGTH_LONG
-                ).setAction(getString(R.string.snackbarok)) { null }
-                    .show()
+                ).setAction(getString(R.string.snackbarok)) {
+
+                }.show()
             }
             else -> {
                 viewLifecycleOwner.lifecycleScope.launchWhenCreated {

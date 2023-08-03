@@ -20,28 +20,20 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        replaceFragment(HomeFragment.newInstance(), true)
+        replaceFragment(HomeFragment.newInstance())
         
     }
 
-    fun replaceFragment(fragment: Fragment, istransition: Boolean) {
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentTransition = supportFragmentManager.beginTransaction()
 
-        if (istransition) {
-            fragmentTransition.setCustomAnimations(
-                android.R.anim.slide_out_right,
-                android.R.anim.slide_in_left
-            )
-        }
-        fragmentTransition.replace(R.id.flFragmenet, fragment).addToBackStack(fragment.javaClass.simpleName)
+        fragmentTransition.setCustomAnimations(
+            android.R.anim.slide_out_right,
+            android.R.anim.slide_in_left
+        )
+        fragmentTransition.replace(R.id.flFragmenet, fragment)
         fragmentTransition.commit()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        onBackPressedDispatcher.onBackPressed()
-        finish()
     }
 
 }

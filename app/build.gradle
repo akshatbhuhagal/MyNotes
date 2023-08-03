@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.akshatbhuhagal.mynotes"
         minSdkVersion 16
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
@@ -62,7 +62,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
 
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
