@@ -9,7 +9,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>
-
+    //get Notes by ID
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getSpecificNote(id: Int): NoteEntity
 
@@ -18,7 +18,7 @@ interface NoteDao {
 
     @Delete
     suspend fun deleteNotes(note: NoteEntity)
-
+    //Delete note
     @Query("DELETE FROM notes WHERE id = :id")
     suspend fun deleteSpecificNote(id: Int)
 
