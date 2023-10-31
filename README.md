@@ -15,12 +15,7 @@ Written in Kotlin
 - **Notes Colours** - Change/Add Differente colours of Notes.
 - **Re-edit Notes** - Re-edit or Update Your Notes.
 
-### Contributing
-###### You can star ⭐ and fork 🍽️ this repository on GitHub by navigating at the top of this repository.
-
-#### Like this repo, give it a star ⭐ and fork 🍽️ this repository to help others!!
-
-***You can Install and test latest MyNotes app from below 👇*** <br> [<img src="https://www.logo.wine/a/logo/Google_Play/Google_Play-Badge-Logo.wine.svg" width="200" />](https://play.google.com/store/apps/details?id=com.akshatbhuhagal.mynotes)
+***You can Install and test latest MyNotes app from below 👇*** <br> [<img src="https://www.logo.wine/a/logo/Google_Play/Google_Play-Badge-Logo.wine.svg" width="150" />](https://play.google.com/store/apps/details?id=com.akshatbhuhagal.mynotes)
 
 # Screen Shots :
 
