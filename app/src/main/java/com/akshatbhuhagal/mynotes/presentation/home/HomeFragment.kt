@@ -80,8 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setUpRv() = binding.apply {
         notesAdapter = NotesAdapter().apply { setOnClickListener(onClicked) }
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = notesAdapter
     }
 
