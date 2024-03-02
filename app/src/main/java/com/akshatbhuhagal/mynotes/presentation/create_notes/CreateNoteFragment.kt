@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Patterns
@@ -28,6 +29,7 @@ import com.akshatbhuhagal.mynotes.util.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
@@ -58,6 +60,7 @@ class CreateNoteFragment :
         requireArguments().getInt(getString(R.string.noteID), -1).also {
             if(it != -1) viewModel.setNoteId(it)
         }
+        readStorageTask()
     }
 
     companion object {
@@ -75,12 +78,11 @@ class CreateNoteFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
         collectNotes()
     }
 
-    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun collectNotes() = viewLifecycleOwner.lifecycleScope.launch {
         viewModel.note.collectLatest {
             it?.let(this@CreateNoteFragment::setNoteDataInUI)
         }
@@ -94,9 +96,9 @@ class CreateNoteFragment :
         if (note.imgPath != EMPTY_STRING) {
             selectedImagePath = note.imgPath.orEmpty()
             imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-            makeVisible(layoutImage,binding.imgNote, binding.imgDelete)
+            makeVisible(layoutImage, binding.imgNote, binding.imgDelete)
         } else {
-            makeGone(layoutImage,binding.imgNote, binding.imgDelete)
+            makeGone(layoutImage, binding.imgNote, binding.imgDelete)
         }
 
         if (note.webLink != EMPTY_STRING) {
@@ -373,22 +375,44 @@ class CreateNoteFragment :
         )
     }
 
-    private fun readStorageTask() {
-        if (hasReadStoragePerm()) {
+    private fun hasReadImagePerm(): Boolean {
+        return EasyPermissions.hasPermissions(
+            requireContext(),
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        )
+    }
 
-            pickImageFromGallery()
+    private fun readStorageTask() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (hasReadImagePerm()) {
+                pickImageFromGallery()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this, getString(R.string.storage_permission_text),
+                    READ_STORAGE_PERM, android.Manifest.permission.READ_MEDIA_IMAGES
+                )
+            }
         } else {
-            EasyPermissions.requestPermissions(
-                requireActivity(), getString(R.string.storage_permission_text),
-                READ_STORAGE_PERM, android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            if (hasReadStoragePerm()) {
+                pickImageFromGallery()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this, getString(R.string.storage_permission_text),
+                    READ_STORAGE_PERM, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            }
         }
     }
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             startActivityForResult(intent, REQUEST_CODE_IMAGE)
+        } else {
+            if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivityForResult(intent, REQUEST_CODE_IMAGE)
+            }
         }
     }
 
@@ -417,15 +441,11 @@ class CreateNoteFragment :
 
                 if (selectedImageUrl != null) {
                     try {
-
-                        val inputStream =
-                            requireActivity().contentResolver.openInputStream(selectedImageUrl)
+                        val inputStream = requireActivity().contentResolver.openInputStream(selectedImageUrl)
                         val bitmap = BitmapFactory.decodeStream(inputStream)
                         binding.imgNote.setImageBitmap(bitmap)
-                        makeVisible(with(binding) {
-                            imgNote
-                            layoutImage
-                        })
+                        binding.imgNote.makeVisible()
+                        binding.layoutImage.makeVisible()
                         selectedImagePath = getPathFromUri(selectedImageUrl).orEmpty()
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
@@ -435,19 +455,9 @@ class CreateNoteFragment :
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        EasyPermissions.onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults,
-            requireActivity()
-        )
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
