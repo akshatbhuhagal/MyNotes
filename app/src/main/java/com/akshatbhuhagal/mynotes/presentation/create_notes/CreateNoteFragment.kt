@@ -60,7 +60,18 @@ class CreateNoteFragment :
         requireArguments().getInt(getString(R.string.noteID), -1).also {
             if(it != -1) viewModel.setNoteId(it)
         }
-        readStorageTask()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.storage_permission_text),
+                READ_STORAGE_PERM, android.Manifest.permission.READ_MEDIA_IMAGES
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.storage_permission_text),
+                READ_STORAGE_PERM, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
     }
 
     companion object {
@@ -284,57 +295,60 @@ class CreateNoteFragment :
     private val BroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
 
-            if (p1 == null)
+            if (p1 == null || view == null)
                 return
 
             val actionColor = p1.getStringExtra(getString(R.string.action))
 
-            binding.apply {
+
+            view?.let { fragmentView ->
+                val binding = FragmentCreateNoteBinding.bind(fragmentView)
+
                 when (actionColor) {
 
                     getString(R.string.blue) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.cyan) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.green) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.orange) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.purple) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.red) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.yellow) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.brown) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.indigo) -> {
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
 
                     getString(R.string.image) -> {
@@ -346,13 +360,13 @@ class CreateNoteFragment :
                         binding.layoutWebUrl.visibility = View.VISIBLE
                     }
 
-                    getString(R.string.webUrl) -> {
+                    getString(R.string.deleteNote) -> {
                         deleteNote()
                     }
 
                     else -> {
                         binding.layoutImage.visibility = View.GONE
-                        imgNote.visibility = View.GONE
+                        binding.imgNote.visibility = View.GONE
                         binding.layoutWebUrl.visibility = View.GONE
                         selectedColor = p1.getStringExtra(SELECTED_COLOR) ?: ""
                         makeGone(with(binding) {
@@ -361,7 +375,7 @@ class CreateNoteFragment :
                             layoutWebUrl
                         })
                         selectedColor = p1.getStringExtra(SELECTED_COLOR).orEmpty()
-                        colorView.setBackgroundColor(Color.parseColor(selectedColor))
+                        binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
                     }
                 }
             }
