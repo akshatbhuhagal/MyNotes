@@ -112,11 +112,11 @@ class CreateNoteFragment :
             makeGone(layoutImage, binding.imgNote, binding.imgDelete)
         }
 
-        if (note.webLink != EMPTY_STRING) {
-            webLink = note.webLink.orEmpty()
-            tvWebLink.text = note.webLink
+        if (note.storeWebLink != EMPTY_STRING) {
+            webLink = note.storeWebLink.orEmpty()
+            tvWebLink.text = note.storeWebLink
             makeVisible(layoutWebUrl,imgUrlDelete)
-            etWebLink.setText(note.webLink)
+            etWebLink.setText(note.storeWebLink)
         } else {
             makeGone(imgUrlDelete,layoutWebUrl)
         }
@@ -190,14 +190,14 @@ class CreateNoteFragment :
         }
     }
 
-    private fun updateNote(note: NoteEntity) = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun updateNote(note: NoteEntity) = viewLifecycleOwner.lifecycleScope.launch {
         note.apply {
             title = binding.etNoteTitle.text.toString()
             noteText = binding.etNoteDesc.text.toString()
             dateTime = currentTime
             color = selectedColor
             imgPath = selectedImagePath
-            webLink = webLink
+            storeWebLink = webLink
         }.also {
             viewModel.updateNote(it)
         }
@@ -236,14 +236,14 @@ class CreateNoteFragment :
                 }.show()
             }
             else -> {
-                viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+                viewLifecycleOwner.lifecycleScope.launch {
                     NoteEntity().apply {
                         title = etNoteTitle?.text.toString()
                         noteText = etNoteDesc?.text.toString()
                         dateTime = currentTime
                         color = selectedColor
                         imgPath = selectedImagePath
-                        webLink = webLink
+                        storeWebLink = webLink
                     }.also {
                         viewModel.saveNote(it)
                     }
@@ -275,21 +275,6 @@ class CreateNoteFragment :
         } else {
             Toast.makeText(requireContext(), getString(R.string.url_validation), Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
-
-        val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
-
-        if (isTransition) {
-            fragmentTransition.setCustomAnimations(
-                android.R.anim.slide_out_right,
-                android.R.anim.slide_in_left
-            )
-        }
-        fragmentTransition.replace(R.id.flFragmenet, fragment)
-            .addToBackStack(fragment.javaClass.simpleName)
-        fragmentTransition.commit()
     }
 
     private val BroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {

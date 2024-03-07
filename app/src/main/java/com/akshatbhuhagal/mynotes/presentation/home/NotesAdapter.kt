@@ -35,8 +35,8 @@ class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffC
                     imgNote.visibility = View.GONE
                 }
 
-                if (note.webLink.isNullOrEmpty().not()) {
-                    tvWebLink.text = note.webLink
+                if (note.storeWebLink.isNullOrEmpty().not()) {
+                    tvWebLink.text = note.storeWebLink
                     tvWebLink.visibility = View.VISIBLE
                 } else {
                     tvWebLink.visibility = View.GONE

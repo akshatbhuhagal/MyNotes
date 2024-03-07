@@ -24,7 +24,7 @@ data class NoteEntity(
     var imgPath: String? = null,
     
     @ColumnInfo(name = "web_link")
-    var webLink: String? = null,
+    var storeWebLink: String? = null,
 
     @ColumnInfo(name = "color")
     var color: String? = null,
