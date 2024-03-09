@@ -42,7 +42,7 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "InflateParams")
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
 
@@ -58,30 +58,17 @@ class NoteBottomSheetFragment : BottomSheetDialogFragment() {
             behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    var state = EMPTY_STRING
-                    while (newState == newState) {
-                        BottomSheetBehavior.STATE_DRAGGING.apply {
-                            state = DRAGGING
-                        }
-                        BottomSheetBehavior.STATE_SETTLING.apply {
-                            state = SETTLING
-                        }
-                        BottomSheetBehavior.STATE_EXPANDED.apply {
-                            state = EXPANDED
-                        }
-                        BottomSheetBehavior.STATE_COLLAPSED.apply {
-                            state = COLLAPSED
-                        }
-                        BottomSheetBehavior.STATE_HIDDEN.apply {
-                            state = HIDDEN
-                            dismiss()
-                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                        }
+                    BottomSheetBehavior.STATE_DRAGGING.apply { }
+                    BottomSheetBehavior.STATE_SETTLING.apply { }
+                    BottomSheetBehavior.STATE_EXPANDED.apply { }
+                    BottomSheetBehavior.STATE_COLLAPSED.apply { }
+                    BottomSheetBehavior.STATE_HIDDEN.apply {
+                        dismiss()
+                        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                     }
                 }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                }
+                override fun onSlide(bottomSheet: View, slideOffset: Float) { }
             })
         }
     }

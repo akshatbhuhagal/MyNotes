@@ -1,5 +1,6 @@
 package com.akshatbhuhagal.mynotes.presentation.create_notes
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,6 +16,8 @@ import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -49,7 +52,6 @@ class CreateNoteFragment :
 
     // Permission Private Read & Write
     private var READ_STORAGE_PERM = 123
-    private var REQUEST_CODE_IMAGE = 456
 
     private var webLink = EMPTY_STRING
     private var selectedImagePath = EMPTY_STRING
@@ -125,7 +127,7 @@ class CreateNoteFragment :
     private fun initViews() = binding.apply {
         // Register & Unregister broadcast receiver
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
-            BroadcastReceiver, IntentFilter("bottom_sheet_action")
+            broadcastReceiver, IntentFilter("bottom_sheet_action")
         )
 
         colorView.setBackgroundColor(Color.parseColor(selectedColor))
@@ -260,7 +262,7 @@ class CreateNoteFragment :
         }
     }
 
-    private fun deleteNote() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun deleteNote() = viewLifecycleOwner.lifecycleScope.launch {
         viewModel.deleteNote()
         requireActivity().supportFragmentManager.popBackStack()
     }
@@ -277,7 +279,7 @@ class CreateNoteFragment :
         }
     }
 
-    private val BroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
 
             if (p1 == null || view == null)
@@ -369,15 +371,14 @@ class CreateNoteFragment :
 
     private fun hasReadStoragePerm(): Boolean {
         return EasyPermissions.hasPermissions(
-            requireContext(),
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
+            requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun hasReadImagePerm(): Boolean {
         return EasyPermissions.hasPermissions(
-            requireContext(),
-            android.Manifest.permission.READ_MEDIA_IMAGES
+            requireContext(), android.Manifest.permission.READ_MEDIA_IMAGES
         )
     }
 
@@ -404,19 +405,20 @@ class CreateNoteFragment :
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            startActivityForResult(intent, REQUEST_CODE_IMAGE)
+            getResultForImage.launch(intent)
         } else {
             if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivityForResult(intent, REQUEST_CODE_IMAGE)
+                getResultForImage.launch(intent)
             }
         }
     }
 
     private fun getPathFromUri(contentUri: Uri): String? {
-        var filePath: String?
+        val filePath: String?
         val cursor = requireActivity().contentResolver.query(contentUri, null, null, null, null)
         if (cursor == null) {
             filePath = contentUri.path
@@ -429,14 +431,13 @@ class CreateNoteFragment :
         return filePath
     }
 
-    // Setup About Image
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    // Image Integration
+    private val getResultForImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
-        if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK) {
-            if (data != null) {
+        if (it.resultCode == RESULT_OK) {
+            if (it.data != null) {
 
-                val selectedImageUrl = data.data
+                val selectedImageUrl = it.data!!.data
 
                 if (selectedImageUrl != null) {
                     try {

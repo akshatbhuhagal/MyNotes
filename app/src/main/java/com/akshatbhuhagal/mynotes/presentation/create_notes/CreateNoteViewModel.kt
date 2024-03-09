@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.akshatbhuhagal.mynotes.data.local.entities.NoteEntity
 import com.akshatbhuhagal.mynotes.data.repo.NotesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,6 +15,7 @@ class CreateNoteViewModel @Inject constructor(private val notesRepo: NotesRepo) 
 
     val noteId = MutableStateFlow<Int?>(null)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val note = noteId.flatMapLatest {
         val note = it?.let { notesRepo.getNote(it) }
         flowOf(note)
