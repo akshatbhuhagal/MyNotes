@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:autoTransition="animateToEnd"
+        motion:duration="2000">
+
+
+       <KeyFrameSet>
+
+           <!-- App Name -->
+           <KeyAttribute
+               motion:motionTarget="@+id/textView"
+               motion:framePosition="90"
+               android:scaleY="0.5"
+               android:scaleX="0.5" />
+           <KeyAttribute
+               motion:motionTarget="@+id/textView"
+               motion:framePosition="100"
+               android:scaleY="1"
+               android:scaleX="1" />
+
+
+           <!-- Image -->
+           <KeyPosition
+               motion:motionTarget="@id/imageView"
+               motion:framePosition="10"
+               motion:percentX="0.25"
+               motion:percentY="0.5"
+               motion:curveFit="spline"/>
+           <KeyPosition
+               motion:motionTarget="@id/imageView"
+               motion:framePosition="80"
+               motion:percentX="0.75"
+               motion:percentY="0.75"
+               motion:curveFit="spline"/>
+
+       </KeyFrameSet>
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/notes_app_logo"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintVertical_bias="0.5" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/notes_app_logo"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintVertical_bias="0.5" />
+    </ConstraintSet>
+
+</MotionScene>

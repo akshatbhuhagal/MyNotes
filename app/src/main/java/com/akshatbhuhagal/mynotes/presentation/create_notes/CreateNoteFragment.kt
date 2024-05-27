@@ -133,7 +133,7 @@ class CreateNoteFragment :
         colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
         // Date & Time
-        val sdf = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         currentTime = sdf.format(Date())
 
         tvDateTime.text = currentTime

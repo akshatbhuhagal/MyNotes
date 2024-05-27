@@ -65,8 +65,8 @@ dependencies {
     implementation("pub.devrel:easypermissions:3.0.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.activity:activity-ktx:1.8.2")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.fragment:fragment-ktx:1.7.1")
 
     // Room components
     implementation("androidx.room:room-ktx:2.6.1")
@@ -74,25 +74,25 @@ dependencies {
     androidTestImplementation("androidx.room:room-testing:2.6.1")
 
     // Lifecycle components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.8.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:r2.6.2")
 
     // Kotlin components
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
     // UI
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     
     // Sdp
-    implementation("com.intuit.sdp:sdp-android:1.0.6")
+    implementation("com.intuit.sdp:sdp-android:1.1.1")
 
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-android-compiler:2.50")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
