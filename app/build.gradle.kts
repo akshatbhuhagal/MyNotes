@@ -24,7 +24,7 @@ android {
         applicationId = "com.axatabyss.mynotes"
         minSdk = 23
         targetSdk = 36
-        versionCode = 3
+        versionCode = 5
         versionName = "1.0.0"
         ndkVersion = "29.0.14033849"
 

@@ -358,20 +358,6 @@ class CreateNoteFragment : Fragment(R.layout.fragment_create_note) {
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private fun getPathFromUri(contentUri: Uri): String? {
-        val filePath: String?
-        val cursor = requireActivity().contentResolver.query(contentUri, null, null, null, null)
-        if (cursor == null) {
-            filePath = contentUri.path
-        } else {
-            cursor.moveToFirst()
-            val index = cursor.getColumnIndex("_data")
-            filePath = cursor.getString(index)
-            cursor.close()
-        }
-        return filePath
-    }
-
     // Image Integration
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         // Callback is invoked after user selects media or closes picker
@@ -398,84 +384,8 @@ class CreateNoteFragment : Fragment(R.layout.fragment_create_note) {
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            // Android 14+ - Check for full or partial access
-            permissions[android.Manifest.permission.READ_MEDIA_IMAGES] == true ||
-                    permissions[android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED] == true
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13 - Check for granular media permission
-            permissions[android.Manifest.permission.READ_MEDIA_IMAGES] == true
-        } else {
-            // Android 12 and below
-            permissions[android.Manifest.permission.READ_EXTERNAL_STORAGE] == true
-        }
-
-        if (granted) {
-            pickImageFromGallery()
-        } else {
-            Toast.makeText(requireContext(), getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun hasImagePermission(): Boolean {
-        return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-                // Android 14+ - Check for full or partial access
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.READ_MEDIA_IMAGES
-                ) == PackageManager.PERMISSION_GRANTED ||
-                        ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
-                        ) == PackageManager.PERMISSION_GRANTED
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
-                // Android 13 - Check granular permission
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.READ_MEDIA_IMAGES
-                ) == PackageManager.PERMISSION_GRANTED
-            }
-            else -> {
-                // Android 12 and below
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
-            }
-        }
-    }
-
     private fun readStorageTask() {
-        if (hasImagePermission()) {
-            pickImageFromGallery()
-        } else {
-            requestStoragePermission()
-        }
+        pickImageFromGallery()
     }
 
-    private fun requestStoragePermission() {
-        val permissions = when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-                // Android 14+ - Request with partial access option
-                arrayOf(
-                    android.Manifest.permission.READ_MEDIA_IMAGES,
-                    android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
-                )
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
-                // Android 13
-                arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES)
-            }
-            else -> {
-                // Android 12 and below
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-        }
-        requestPermissionLauncher.launch(permissions)
-    }
 }
