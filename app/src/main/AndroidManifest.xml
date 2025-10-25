@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Android 12 and below -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+
+    <!-- Android 13+ (API 33+) - Granular media permissions -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <!-- Android 14+ (API 34+) - Partial photo/video access -->
+    <!-- This is automatically added by system if you declare READ_MEDIA_IMAGES or READ_MEDIA_VIDEO -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <application
         android:name=".MyApp"
@@ -29,8 +37,7 @@
         </activity>
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="false"
-            android:screenOrientation="fullSensor">
+            android:exported="false">
         </activity>
     </application>
 

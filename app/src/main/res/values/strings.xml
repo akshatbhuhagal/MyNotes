@@ -3,6 +3,7 @@
     <string name="tasks">Tasks</string>
     <string name="snackbarok">OK</string>
     <string name="storage_permission_text">This App Needs access to your Storage.</string>
+    <string name="storage_permission_denied">Storage permission denied. Give permission and try again.</string>
     <string name="search_notes">Search Notes</string>
     <string name="notes">Notes</string>
     <string name="my_notes">My Notes</string>
