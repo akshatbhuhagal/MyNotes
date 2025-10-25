@@ -1,7 +1,11 @@
 package com.axatabyss.mynotes.presentation.home
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.axatabyss.mynotes.data.local.entities.NoteEntity
 import com.axatabyss.mynotes.databinding.ItemRvNotesBinding
+import androidx.core.net.toUri
 
 class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffCallback) {
 
@@ -29,8 +34,12 @@ class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffC
                 }
 
                 if (note.imgPath.isNullOrEmpty().not()) {
-                    imgNote.setImageBitmap(BitmapFactory.decodeFile(note.imgPath))
-                    imgNote.visibility = View.VISIBLE
+                    binding.root.context.getBitmapFromPath(note.imgPath!!)?.let { bitmap ->
+                        imgNote.setImageBitmap(bitmap)
+                        imgNote.visibility = View.VISIBLE
+                    } ?: run {
+                        imgNote.visibility = View.GONE
+                    }
                 } else {
                     imgNote.visibility = View.GONE
                 }
@@ -46,6 +55,21 @@ class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NotesViewHolder>(diffC
                     listener.onClicked(note.id)
                 }
             }
+        }
+    }
+
+    fun Context.getBitmapFromPath(path: String): Bitmap? {
+        return try {
+            if (path.startsWith("content://")) {
+                contentResolver.openInputStream(path.toUri())?.use { inputStream ->
+                    BitmapFactory.decodeStream(inputStream)
+                }
+            } else {
+                BitmapFactory.decodeFile(path)
+            }
+        } catch (e: Exception) {
+            Log.e("BitmapHelper", "Failed to load bitmap from: $path", e)
+            null
         }
     }
 

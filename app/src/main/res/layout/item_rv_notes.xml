@@ -77,7 +77,7 @@
                 android:paddingBottom="@dimen/_5sdp"
                 android:text="@string/my_notes"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvDateTime"
